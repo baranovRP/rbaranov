@@ -3,7 +3,7 @@ package ru.job4j;
 /**
  * This class prints text messages to console
  *
- * @author baranovr
+ * @author Roman Baranov (baranov.rp@gmail.com)
  * @version 1
  */
 
