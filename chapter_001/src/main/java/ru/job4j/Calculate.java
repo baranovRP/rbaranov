@@ -17,16 +17,11 @@ public class Calculate {
 	}
 
     /**
-     * Triples the text message
-     * @param value the value for tripling
-     * @return formatted text message
+     * Method echo.
+     * @param name Your name.
+     * @return Echo plus your name.
      */
-	public final String echo(final String value) {
-		if (value != null) {
-			value = String.format("%s value = ", value);
-		} else {
-			value = "value = null";
-		}
-		return String.format("%s %s %s", value, value, value);
-	}
+    public String echo(String name) {
+        return "Echo, echo, echo : " + name;
+    }
 }
