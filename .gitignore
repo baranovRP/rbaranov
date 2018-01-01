@@ -24,3 +24,7 @@ hs_err_pid*
 # Compiled directories
 target
 out
+
+# Ide project files
+*.iml
+.idea/
