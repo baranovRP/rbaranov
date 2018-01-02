@@ -1,5 +1,7 @@
 package ru.job4j;
 
+import java.util.NoSuchElementException;
+
 /**
  * An iterator over a two-dimensional array (matrix).
  *
@@ -7,11 +9,10 @@ package ru.job4j;
  * @version 1
  */
 public class MatrixIterator implements Iterator {
-    private static final int LINE = 0;
-    private static final int COLUMN = 1;
 
     private int[][] items;
-    private int[] position = new int[]{0, 0};
+    private int row = 0;
+    private int column = 0;
 
     public MatrixIterator(int[][] items) {
         this.items = items;
@@ -19,24 +20,35 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public Object next() {
-        int item = items[position[LINE]][position[COLUMN]];
+        if (isArrayEmpty() || isOutOfArray()) {
+            throw new NoSuchElementException();
+        }
+
+        int item = items[row][column];
         setPosition();
         return item;
     }
 
     @Override
     public boolean hasNext() {
-        return position[LINE] <= items.length
-            && (position[LINE] != items.length || position[COLUMN] < items[LINE].length)
-            && Integer.valueOf(items[position[LINE]][position[COLUMN]]) != null;
+        throw new UnsupportedOperationException();
+
     }
 
     private void setPosition() {
-        if (position[COLUMN] < items[position[LINE]].length) {
-            position[COLUMN]++;
+        if (column < items[row].length) {
+            column++;
         } else {
-            position[LINE]++;
-            position[COLUMN] = 0;
+            row++;
+            column = 0;
         }
+    }
+
+    private boolean isArrayEmpty() {
+        return items == null || items.length < 1;
+    }
+
+    private boolean isOutOfArray() {
+        return !(row < items.length && column < items[row].length);
     }
 }
