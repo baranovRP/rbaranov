@@ -1,9 +1,13 @@
 package ru.job4j.generic;
 
+/**
+ * @author Roman Baranov (baranov.rp@gmail.com)
+ * @version 1
+ */
 public class SimpleArray<T> {
 
-    Object[] items;
-    int idx;
+    private Object[] items;
+    private int idx;
 
     public SimpleArray(int size) {
         this.items = new Object[size];
@@ -55,5 +59,9 @@ public class SimpleArray<T> {
      */
     public T get(int position) {
         return (T) items[position];
+    }
+
+    public int size() {
+        return idx;
     }
 }
