@@ -54,10 +54,51 @@ public class LinkedList<E> implements Iterable<E> {
         throw new NoSuchElementException();
     }
 
+    public E pollFirst() {
+        checkContainerSize();
+
+        Node<E> current = head;
+        E value = head.value;
+        head = current.next;
+
+        size--;
+        modCount++;
+
+        return value;
+    }
+
+    public E pollLast() {
+        checkContainerSize();
+
+        if (size > 1) {
+            Node<E> current = head;
+            while (current.next.next != null) {
+                current = current.next;
+            }
+            return removeLastItem(current.next);
+        } else {
+            return removeLastItem(head);
+        }
+    }
+
+    private void checkContainerSize() {
+        if (size == 0) {
+            throw new NullPointerException();
+        }
+    }
+
+    private E removeLastItem(Node<E> item) {
+        E value = item.value;
+        item = null;
+        size--;
+        modCount++;
+
+        return value;
+    }
+
     public int size() {
         return size;
     }
-
 
     @Override
     public Iterator<E> iterator() {
