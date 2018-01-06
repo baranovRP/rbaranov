@@ -31,12 +31,11 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        throw new UnsupportedOperationException();
-
+        return !isArrayEmpty() && !isOutOfArray();
     }
 
     private void setPosition() {
-        if (column < items[row].length) {
+        if (column < items[row].length - 1) {
             column++;
         } else {
             row++;
