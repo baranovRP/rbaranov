@@ -20,12 +20,19 @@ public class MatrixIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void squareArrayHasNextNextSequentialInvocation() {
         it = new MatrixIterator(new int[][]{{1, 2, 3}, {4, 5, 6}});
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(2));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(3));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(4));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(5));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(6));
+        assertThat(it.hasNext(), is(false));
         it.next();
     }
 
@@ -44,6 +51,8 @@ public class MatrixIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void squareArrayHasNextSequentialInvocationDoesntAffectRetrievalOrder() {
         it = new MatrixIterator(new int[][]{{1, 2, 3}, {4, 5, 6}});
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
         assertThat(it.next(), is(2));
         assertThat(it.next(), is(3));
@@ -65,6 +74,8 @@ public class MatrixIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void jaggedArrayHasNextSequentialInvocationDoesntAffectRetrievalOrder() {
         it = new MatrixIterator(new int[][]{{1}, {3, 4}});
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
         assertThat(it.next(), is(3));
         assertThat(it.next(), is(4));
@@ -74,9 +85,13 @@ public class MatrixIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void jaggedArrayHasNextNextSequentialInvocation() {
         it = new MatrixIterator(new int[][]{{1}, {3, 4}});
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(3));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(4));
+        assertThat(it.hasNext(), is(false));
         it.next();
     }
 }
