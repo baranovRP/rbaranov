@@ -96,6 +96,43 @@ public class LinkedList<E> implements Iterable<E> {
         return value;
     }
 
+    public boolean remove(E value) {
+        Node<E> current = head;
+        Node<E> prev = current;
+        if (head.value == null) {
+            return false;
+        }
+        if (head.value == value) {
+            return removeFirst();
+        }
+
+        while (current != null || current.next != null) {
+            if (current.value == value) {
+                prev.next = current.next;
+                modCount++;
+                size--;
+                return true;
+            }
+            prev = current;
+            current = current.next;
+        }
+
+
+        return false;
+    }
+
+    private boolean removeFirst() {
+        Node<E> prev = head;
+        if (head.next == null) {
+            head = null;
+        } else {
+            head = prev.next;
+        }
+        modCount++;
+        size--;
+        return true;
+    }
+
     public int size() {
         return size;
     }
@@ -130,6 +167,17 @@ public class LinkedList<E> implements Iterable<E> {
                 }
             }
         };
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            result += it.next();
+        }
+
+        return "{" + result + "}";
     }
 
     private class Node<E> {
