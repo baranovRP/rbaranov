@@ -36,7 +36,7 @@ public class IteratorOfIterators<T> {
             @Override
             public T next() {
                 switchIterator();
-                if (current == null) {
+                if (hasNext()) {
                     throw new NoSuchElementException();
                 }
                 if (!current.hasNext() && it.hasNext()) {
