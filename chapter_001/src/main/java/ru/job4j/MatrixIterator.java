@@ -20,7 +20,7 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public Object next() {
-        if (isArrayEmpty() || isOutOfArray()) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
 
