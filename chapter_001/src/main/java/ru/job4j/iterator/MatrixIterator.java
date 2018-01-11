@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.iterator;
 
 import java.util.NoSuchElementException;
 
@@ -20,7 +20,7 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public Object next() {
-        if (isArrayEmpty() || isOutOfArray()) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
 
