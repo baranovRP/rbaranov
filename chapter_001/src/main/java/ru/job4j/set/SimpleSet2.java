@@ -10,15 +10,15 @@ import java.util.Iterator;
  * @author Roman Baranov (baranov.rp@gmail.com)
  * @version 1
  */
-public class SimpleSet<E> {
+public class SimpleSet2<E> {
 
     private LinkedList<E> container;
 
-    public SimpleSet() {
+    public SimpleSet2() {
         this.container = new LinkedList<>();
     }
 
-    public SimpleSet(E... args) {
+    public SimpleSet2(E... args) {
         this.container = new LinkedList<>();
         for (E value : args) {
             add(value);

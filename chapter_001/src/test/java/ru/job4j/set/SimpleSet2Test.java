@@ -9,13 +9,13 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class SimpleSetTest {
+public class SimpleSet2Test {
 
-    SimpleSet<Integer> ints;
+    SimpleSet2<Integer> ints;
 
     @Test
     public void givenSetWhenAddDuplicateThenContainerNotContainDuplicate() {
-        ints = new SimpleSet<>();
+        ints = new SimpleSet2<>();
         ints.add(2);
         assertThat(ints.toString(), is("2"));
         ints.add(2);
@@ -30,13 +30,13 @@ public class SimpleSetTest {
 
     @Test
     public void givenFullVarArgsConstructorWhenPassDuplicateThenContainerNotContainDuplicate() {
-        ints = new SimpleSet<>(5, 6, 3, 5, 3);
+        ints = new SimpleSet2<>(5, 6, 3, 5, 3);
         assertThat(ints.toString(), is("563"));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void givenIteratorWhenGoesOverBorderThenThrowException() {
-        ints = new SimpleSet<>(5, 6, 3);
+        ints = new SimpleSet2<>(5, 6, 3);
         Iterator it = ints.iterator();
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(5));
@@ -48,7 +48,7 @@ public class SimpleSetTest {
 
     @Test(expected = ConcurrentModificationException.class)
     public void givenIteratorWhenModifyListThenThrowException() {
-        ints = new SimpleSet<>(5, 6, 3);
+        ints = new SimpleSet2<>(5, 6, 3);
         Iterator it = ints.iterator();
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(5));
