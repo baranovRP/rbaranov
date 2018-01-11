@@ -31,9 +31,8 @@ public class SimpleSet2<E> {
      * @param value element to be added to this set
      */
     public void add(E value) {
-        Iterator<E> it = container.iterator();
-        while (it.hasNext()) {
-            if (it.next() == value) {
+        for (E element : container) {
+            if (element != null && element.equals(value)) {
                 return;
             }
         }
