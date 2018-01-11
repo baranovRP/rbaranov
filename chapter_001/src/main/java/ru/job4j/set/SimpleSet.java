@@ -21,7 +21,7 @@ public class SimpleSet<E> {
 
     public void add(E value) {
         for (int idx = 0; idx < container.length(); idx++) {
-            if (container.get(idx) == value) {
+            if (isValuePresent(idx) && container.get(idx).equals(value)) {
                 return;
             }
         }
@@ -52,5 +52,9 @@ public class SimpleSet<E> {
             }
         }
         return result;
+    }
+
+    private boolean isValuePresent(int idx) {
+        return container.get(idx) != null;
     }
 }
