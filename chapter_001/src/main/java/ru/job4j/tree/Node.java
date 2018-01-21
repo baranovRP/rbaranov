@@ -10,6 +10,11 @@ import java.util.List;
  */
 public class Node<E> {
     private final List<Node<E>> children = new ArrayList<>();
+
+    public E getValue() {
+        return value;
+    }
+
     private final E value;
 
     public Node(final E value) {

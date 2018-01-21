@@ -10,32 +10,10 @@ import java.util.*;
  */
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
+    Stack<Node<E>> children = new Stack<>();
 
     public Tree(E root) {
         this.root = new Node<>(root);
-    }
-
-    public boolean isBinary() {
-        return isBinary(this.root.leaves());
-    }
-
-    private boolean isBinary(List<Node<E>> leaves) {
-        if (leaves.size() == 0) {
-            return true;
-        }
-
-        List<Node<E>> children = new LinkedList<>();
-        for (Node<E> leaf : leaves) {
-            List<Node<E>> nodes = leaf.leaves();
-
-            if (nodes.size() > 2) {
-                return false;
-            } else {
-                children.addAll(nodes);
-            }
-        }
-
-        return isBinary(children);
     }
 
     @Override
@@ -72,6 +50,34 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        getAllChildren();
+
+        return new Iterator<E>() {
+            @Override
+            public boolean hasNext() {
+                return !children.isEmpty();
+            }
+
+            @Override
+            public E next() {
+                if (children.isEmpty()) {
+                    throw new NoSuchElementException();
+                }
+                return children.pop().getValue();
+            }
+        };
+    }
+
+    private void getAllChildren() {
+        getAllChildren(this.root);
+    }
+
+    private void getAllChildren(Node<E> node) {
+        if (node != null) {
+            children.add(node);
+            for (Node<E> leaf : node.leaves()) {
+                getAllChildren(leaf);
+            }
+        }
     }
 }
