@@ -10,45 +10,35 @@ import java.util.HashMap;
  */
 public class Checker {
 
-    private HashMap<Character, Integer> counter = new HashMap<>();
-
     public boolean checkSymbolOccurrences(String first, String second) {
-        if (first == null || second == null) {
-            return false;
-        }
-
-        if (first.length() != second.length()) {
-            return false;
-        }
-
-        for (char symbol : first.toCharArray()) {
-            increaseCounter(symbol);
-        }
-
-        for (char symbol : second.toCharArray()) {
-            if (!counter.containsKey(symbol)) {
-                return false;
+        HashMap<Character, Integer> counter = new HashMap<>();
+        boolean result = false;
+        if (isLengthEqual(first, second)) {
+            for (char symbol : first.toCharArray()) {
+                counter.put(symbol,
+                    !counter.containsKey(symbol) ? 1 : counter.get(symbol) + 1);
             }
-            decreaseCounter(symbol);
+            for (char symbol : second.toCharArray()) {
+                if (!counter.containsKey(symbol)) {
+                    break;
+                }
+                decreaseCounter(counter, symbol);
+            }
+            result = counter.isEmpty();
         }
-
-        return counter.isEmpty();
+        return result;
     }
 
-    private void decreaseCounter(char symbol) {
-        int value = counter.get(symbol);
-        if (value > 1) {
+    private boolean isLengthEqual(String first, String second) {
+        return first != null && second != null
+            && first.length() == second.length();
+    }
+
+    private void decreaseCounter(HashMap<Character, Integer> counter, char symbol) {
+        if (counter.get(symbol) > 1) {
             counter.put(symbol, counter.get(symbol) - 1);
         } else {
             counter.remove(symbol);
-        }
-    }
-
-    private void increaseCounter(char symbol) {
-        if (!counter.containsKey(symbol)) {
-            counter.put(symbol, 1);
-        } else {
-            counter.put(symbol, counter.get(symbol) + 1);
         }
     }
 }
