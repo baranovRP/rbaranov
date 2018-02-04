@@ -18,39 +18,41 @@ public class Printer {
      * @return string representing the books
      */
     public String printBook(final OrderBook orderBook) {
-        StringBuilder sb = new StringBuilder(orderBook.getName() + "\n");
-        sb.append("\tBID \t\t\t ASK\n");
-        sb.append("Volume@Price  –  Volume@Price\n");
+        StringBuilder sb = createTitle(orderBook);
         TreeMap<Double, TreeMap<Integer, Order>> asks = orderBook.getAsks();
         TreeMap<Double, TreeMap<Integer, Order>> bids = orderBook.getBids();
-
-        Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> asksIt = asks.entrySet().iterator();
-        Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> bidsIt = bids.entrySet().iterator();
-
+        Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> asksIt =
+            asks.entrySet().iterator();
+        Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> bidsIt =
+            bids.entrySet().iterator();
         while (bidsIt.hasNext() || asksIt.hasNext()) {
             sb.append(formatPrint(aggregate(bidsIt)));
             sb.append(" \t  –  \t ");
             sb.append(formatPrint(aggregate(asksIt)));
             sb.append("\n");
         }
-
         return sb.toString();
     }
 
-    private Order aggregate(final Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> it) {
-        if (!it.hasNext()) {
-            return null;
+    private StringBuilder createTitle(OrderBook orderBook) {
+        StringBuilder sb = new StringBuilder(orderBook.getName() + "\n");
+        sb.append("\tBID \t\t\t ASK\n");
+        sb.append("Volume@Price  –  Volume@Price\n");
+        return sb;
+    }
+
+    private Order aggregate(
+        final Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> it) {
+        Order order = null;
+        if (it.hasNext()) {
+            Map.Entry<Double, TreeMap<Integer, Order>> orders = it.next();
+            order = aggregateByPrice(orders.getValue());
         }
-        Map.Entry<Double, TreeMap<Integer, Order>> orders = it.next();
-        return aggregateByPrice(orders.getValue());
+        return order;
     }
 
     private String formatPrint(final Order order) {
-        if (order != null) {
-            return order.toStringSimple();
-        } else {
-            return "--------";
-        }
+        return order != null ? order.toStringSimple() : "--------";
     }
 
     private Order aggregateByPrice(final TreeMap<Integer, Order> collection) {

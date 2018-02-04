@@ -25,7 +25,6 @@ public enum Operation {
                 return operation;
             }
         }
-
         throw new IllegalArgumentException(
             format("Operation with title: {%s}, not found", title));
     }

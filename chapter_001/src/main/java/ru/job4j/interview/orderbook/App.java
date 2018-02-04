@@ -29,11 +29,9 @@ public class App {
         TreeMap<String, OrderBook> orderBooks = new TreeMap<>();
         try (InputStream in = new FileInputStream(xml)) {
             parser.init(in);
-
             long start = currentTimeMillis();
             parser.parse(orderBooks);
             long delay = currentTimeMillis() - start;
-
             log.info(format("total time: {%s}ms", delay));
         } catch (IOException | XMLStreamException e) {
             e.printStackTrace();
@@ -42,8 +40,10 @@ public class App {
     }
 
     private void print(TreeMap<String, OrderBook> orderBooks) {
+        StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, OrderBook> orderBook : orderBooks.entrySet()) {
-            System.out.println(printer.printBook(orderBook.getValue()));
+            sb.append(printer.printBook(orderBook.getValue())).append("\n");
         }
+        System.out.println(sb.toString());
     }
 }

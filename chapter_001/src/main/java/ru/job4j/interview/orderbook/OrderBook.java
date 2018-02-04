@@ -27,8 +27,10 @@ public class OrderBook {
      * @param order order
      */
     public void add(final Order order) {
-        Order updatedOrder = tradeIfPossible(order,
-            book.getTradeBook(revertOperation(order.getOperation())));
+        TreeMap<Double, TreeMap<Integer, Order>> tradeBook =
+            book.getTradeBook(revertOperation(order.getOperation()));
+        Order updatedOrder =
+            tradeIfPossible(order, tradeBook.entrySet().iterator());
         placeOrder(updatedOrder, book.getTradeBook(updatedOrder.getOperation()));
     }
 
@@ -54,24 +56,20 @@ public class OrderBook {
     }
 
     private Order tradeIfPossible(final Order order,
-                                  final Map<Double, TreeMap<Integer, Order>> collection) {
-        Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> priceIt =
-            collection.entrySet().iterator();
-
-        while (priceIt.hasNext() && order.getVolume() > 0) {
+                                  final Iterator<Map.Entry<Double, TreeMap<Integer, Order>>> priceIt) {
+        boolean isTradeNecessary = true;
+        while (priceIt.hasNext() && order.getVolume() > 0 && isTradeNecessary) {
             Map.Entry<Double, TreeMap<Integer, Order>> entry = priceIt.next();
             Iterator<Map.Entry<Integer, Order>> orderIt =
                 entry.getValue().entrySet().iterator();
-            while (orderIt.hasNext()) {
+            while (orderIt.hasNext() && isTradeNecessary) {
                 Map.Entry<Integer, Order> record = orderIt.next();
-                if (!trade(order, record.getValue())) {
-                    return order;
-                }
-                if (record.getValue().getVolume() == 0) {
+                isTradeNecessary = trade(order, record.getValue());
+                if (record.getValue().getVolume() == 0 && isTradeNecessary) {
                     orderIt.remove();
                 }
             }
-            if (entry.getValue().isEmpty()) {
+            if (entry.getValue().isEmpty() && isTradeNecessary) {
                 priceIt.remove();
             }
         }
@@ -79,19 +77,18 @@ public class OrderBook {
     }
 
     private boolean trade(final Order processedOrder, final Order proposedOrder) {
-        if (processedOrder.getOperation().equals(SELL)) {
-            return matchOffer(processedOrder, proposedOrder);
-        } else {
-            return matchOffer(proposedOrder, processedOrder);
-        }
+        return processedOrder.getOperation().equals(SELL)
+            ? matchOffer(processedOrder, proposedOrder)
+            : matchOffer(proposedOrder, processedOrder);
     }
 
     private boolean matchOffer(final Order incomeOrder, final Order existOrder) {
+        boolean isMatched = false;
         if (existOrder.getPrice() >= incomeOrder.getPrice()) {
             swap(incomeOrder, existOrder);
-            return true;
+            isMatched = true;
         }
-        return false;
+        return isMatched;
     }
 
     private void swap(final Order order1, final Order order2) {
@@ -107,13 +104,14 @@ public class OrderBook {
 
     private boolean removeOrder(final int id,
                                 final Map<Double, TreeMap<Integer, Order>> orders) {
+        boolean result = false;
         for (Map.Entry<Double, TreeMap<Integer, Order>> entry : orders.entrySet()) {
             if (entry.getValue().remove(id) != null && entry.getValue().isEmpty()) {
-                orders.remove(entry.getKey());
-                return true;
+                result = orders.remove(entry.getKey()) != null;
+                break;
             }
         }
-        return false;
+        return result;
     }
 
     public TreeMap<Double, TreeMap<Integer, Order>> getBids() {

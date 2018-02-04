@@ -25,7 +25,6 @@ public enum Action {
                 return action;
             }
         }
-
         throw new IllegalArgumentException(
             format("Action with name: {%s}, not found", name));
     }

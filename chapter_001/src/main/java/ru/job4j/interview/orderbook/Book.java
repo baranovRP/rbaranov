@@ -34,7 +34,8 @@ public class Book {
         return book.get(SELL);
     }
 
-    public TreeMap<Double, TreeMap<Integer, Order>> getTradeBook(final Operation operation) {
+    public TreeMap<Double, TreeMap<Integer, Order>> getTradeBook(
+        final Operation operation) {
         return book.get(operation);
     }
 }
