@@ -9,7 +9,7 @@ package ru.job4j.synchronizy;
 public class User {
 
     private int id;
-    private volatile int amount;
+    private int amount;
 
     public User(final int id, final int amount) {
         this.id = id;
