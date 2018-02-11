@@ -20,6 +20,7 @@ public class SimpleBlockingQueue<T> {
 
     @GuardedBy("this")
     private final Queue<T> queue = new LinkedList<>();
+    @GuardedBy("this")
     private int size;
 
     public SimpleBlockingQueue(final int size) {
@@ -77,7 +78,7 @@ public class SimpleBlockingQueue<T> {
 
     private boolean isFull() {
         synchronized (this) {
-            return queue.size() >= size;
+            return queue.size() >= this.size;
         }
     }
 }
