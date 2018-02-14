@@ -11,6 +11,7 @@ public class ThreadPoolTest {
     public void testThreadPool() throws InterruptedException {
         BlockingQueue<Runnable> workQueue = new LinkedBlockingDeque<>();
         ThreadPool pool = new ThreadPool(workQueue);
+        pool.init();
         for (int i = 0; i < 100; i++) {
             pool.add(new Work("work" + i));
         }

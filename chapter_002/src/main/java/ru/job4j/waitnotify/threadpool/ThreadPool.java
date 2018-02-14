@@ -1,29 +1,39 @@
 package ru.job4j.waitnotify.threadpool;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * ThreadPool.
  *
  * @author Roman Baranov (baranov.rp@gmail.com)
- * @version 1
+ * @version 2
  */
+@ThreadSafe
 public class ThreadPool {
 
     private final BlockingQueue<Runnable> workQueue;
+    private final int size;
+    @GuardedBy("this")
     private boolean isStopped = false;
     private final List<RunningThread> runningThreads = new ArrayList<>();
 
     public ThreadPool(BlockingQueue<Runnable> workQueue) {
         this.workQueue = workQueue;
-        int size = Runtime.getRuntime().availableProcessors();
-        for (int i = 0; i < size; i++) {
+        this.size = Runtime.getRuntime().availableProcessors();
+    }
+
+    public void init() {
+        for (int i = 0; i < this.size; i++) {
             RunningThread t = new RunningThread();
-            t.setDaemon(true);
             t.start();
-            runningThreads.add(t);
+            this.runningThreads.add(t);
         }
     }
 
@@ -33,6 +43,11 @@ public class ThreadPool {
      * @param work
      */
     public void add(Work work) {
+        synchronized (this) {
+            if (isStopped) {
+                throw new IllegalStateException();
+            }
+        }
         workQueue.offer(work);
     }
 
@@ -40,7 +55,13 @@ public class ThreadPool {
      * Stop thread pool.
      */
     public void stop() {
-        this.isStopped = true;
+        synchronized (this) {
+            this.isStopped = true;
+        }
+        for (RunningThread thread : runningThreads) {
+            thread.stopThread();
+        }
+
     }
 
     /**
@@ -48,19 +69,31 @@ public class ThreadPool {
      */
     private class RunningThread extends Thread {
 
+        private boolean isThreadStopped = false;
+
         @Override
         public void run() {
-            while (!isStopped || !workQueue.isEmpty()) {
+            while (!this.isInterrupted()
+                && (!isThreadStopped || !workQueue.isEmpty())) {
                 Runnable runnable;
-                while ((runnable = workQueue.poll()) != null) {
+                while ((runnable = pollWork()) != null) {
                     runnable.run();
-                    try {
-                        Thread.sleep(1L);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
+        }
+
+        private Runnable pollWork() {
+            try {
+                return workQueue.poll(500L, MILLISECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        public void stopThread() {
+            this.isThreadStopped = true;
+            this.interrupt();
         }
     }
 }
