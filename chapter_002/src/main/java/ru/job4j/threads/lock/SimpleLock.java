@@ -41,7 +41,8 @@ public class SimpleLock implements Lock {
         synchronized (this) {
             if (currentThread() == this.lockedBy) {
                 this.isLocked = false;
-                notify();
+                notifyAll();
+                this.lockedBy = null;
             }
         }
     }
