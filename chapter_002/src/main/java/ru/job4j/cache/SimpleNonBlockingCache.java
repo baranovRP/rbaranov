@@ -33,8 +33,8 @@ public class SimpleNonBlockingCache<K, V extends CacheModel> implements NonBlock
      */
     @Override
     public void update(K key, V newValue) {
-        int ver = map.get(key).getVersion();
         map.computeIfPresent(key, (k, v) -> {
+            int ver = map.get(key).getVersion();
             if (ver != v.getVersion()) {
                 throw new OptimisticException(
                     new Throwable("Mismatched object's version"));
