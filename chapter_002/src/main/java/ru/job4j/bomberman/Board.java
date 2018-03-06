@@ -15,7 +15,6 @@ public class Board {
     private final static Logger LOG = Logger.getLogger(Board.class.getName());
 
     private final ReentrantLock[][] gameBoard;
-    private ReentrantLock lock;
 
     public Board(final int size) {
         this.gameBoard = new ReentrantLock[size][size];
@@ -67,8 +66,7 @@ public class Board {
             try {
                 LOG.info(String.format("%s tries to lock [%d][%d]",
                     currentThread().getName(), pos.getPosX(), pos.getPosY()));
-                this.lock = gameBoard[pos.getPosX()][pos.getPosY()];
-                result = this.lock.tryLock(
+                result = gameBoard[pos.getPosX()][pos.getPosY()].tryLock(
                     500L, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -85,8 +83,7 @@ public class Board {
     public void unlockPosition(final Point pos) {
         LOG.info(String.format("%s tries to unlock [%d][%d]",
             currentThread().getName(), pos.getPosX(), pos.getPosY()));
-        this.lock = gameBoard[pos.getPosX()][pos.getPosY()];
-        this.lock.unlock();
+        gameBoard[pos.getPosX()][pos.getPosY()].unlock();
     }
 
     /**
