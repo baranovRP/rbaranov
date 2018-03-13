@@ -17,20 +17,20 @@ public class Connector {
 
     private static final Logger LOG = LoggerFactory.getLogger(Connector.class);
 
-    private static Connection conn = null;
+    private Connection conn;
+    private Config config = new Config();
 
     /**
      * Get connection to DB
      *
      * @return connection
      */
-    public static Connection connect() {
+    public Connection connect() {
         if (conn == null) {
             try {
-                conn = DriverManager.getConnection(Config.getURL());
+                conn = DriverManager.getConnection(config.getURL());
                 conn.setAutoCommit(false);
-                LOG.info(String.format(
-                    "Create connection to { %s }.", conn.getMetaData().getURL()));
+                LOG.info("Create connection to { {} }.", conn.getMetaData().getURL());
             } catch (SQLException e) {
                 LOG.error(e.getMessage(), e);
             }
@@ -42,16 +42,12 @@ public class Connector {
      * Close connection to DB
      */
     public void disconnect() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
-                }
+        if (conn != null) {
+            try {
+                conn.close();
+                conn = null;
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
             }
         }
     }

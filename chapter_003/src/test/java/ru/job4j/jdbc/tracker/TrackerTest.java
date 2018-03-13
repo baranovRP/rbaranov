@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.*;
  */
 public class TrackerTest {
 
+    public static final String DO_SMTH = "do smth";
     private SQLStorage storage;
     private Tracker tracker;
 
@@ -25,7 +26,6 @@ public class TrackerTest {
         storage = new SQLStorage();
         storage.initDB();
         tracker = new Tracker();
-        tracker.init();
     }
 
     @After
@@ -36,14 +36,14 @@ public class TrackerTest {
     @Test
     public void addItemToDB() {
         String name = String.valueOf(System.currentTimeMillis());
-        Item item = tracker.add(new Item(name, "do smth"));
+        Item item = tracker.add(new Item(name, DO_SMTH));
         assertThat(item.getName(), is(name));
     }
 
     @Test
     public void deleteItemFromDB() {
         String name = String.valueOf(System.currentTimeMillis());
-        Item item = tracker.add(new Item(name, "do smth"));
+        Item item = tracker.add(new Item(name, DO_SMTH));
         assertThat(item.getName(), is(name));
         tracker.delete(item.getId());
         Item deletedItem = tracker.findById(item.getId());
@@ -53,11 +53,11 @@ public class TrackerTest {
     @Test
     public void selectAllFromDB() {
         String name = String.valueOf(System.currentTimeMillis());
-        tracker.add(new Item(name, "do smth"));
-        tracker.add(new Item(name, "do smth"));
-        tracker.add(new Item(name, "do smth"));
-        tracker.add(new Item(name, "do smth"));
-        tracker.add(new Item(name, "do smth"));
+        tracker.add(new Item(name, DO_SMTH));
+        tracker.add(new Item(name, DO_SMTH));
+        tracker.add(new Item(name, DO_SMTH));
+        tracker.add(new Item(name, DO_SMTH));
+        tracker.add(new Item(name, DO_SMTH));
         List<Item> items = tracker.findAll();
         assertThat(items, hasSize(5));
     }
@@ -65,19 +65,19 @@ public class TrackerTest {
     @Test
     public void findItemsByNameInDB() {
         String name = String.valueOf(System.currentTimeMillis());
-        tracker.add(new Item(name, "do smth"));
-        tracker.add(new Item(name, "do smth"));
-        tracker.add(new Item("not found", "do smth"));
+        tracker.add(new Item(name, DO_SMTH));
+        tracker.add(new Item(name, DO_SMTH));
+        tracker.add(new Item("not found", DO_SMTH));
         List<Item> items = tracker.findByName(name);
         assertThat(items, hasSize(2));
     }
 
     @Test
     public void replaceItemInDB() {
-        String name1 = "name1-" + String.valueOf(System.currentTimeMillis());
-        String name2 = "name2-" + String.valueOf(System.currentTimeMillis());
-        Item oldItem = tracker.add(new Item(name1, "do smth"));
-        Item itemToReplace = tracker.add(new Item(name2, "do smth"));
+        String name1 = "name1-" + System.currentTimeMillis();
+        String name2 = "name2-" + System.currentTimeMillis();
+        Item oldItem = tracker.add(new Item(name1, DO_SMTH));
+        Item itemToReplace = tracker.add(new Item(name2, DO_SMTH));
         tracker.replace(oldItem.getId(), itemToReplace);
         Item newItem = tracker.findById(oldItem.getId());
         assertThat(newItem.getName(), is(itemToReplace.getName()));

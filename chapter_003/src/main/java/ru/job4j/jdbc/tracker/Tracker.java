@@ -3,7 +3,10 @@ package ru.job4j.jdbc.tracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +20,8 @@ public class Tracker {
 
     private static final Logger LOG = LoggerFactory.getLogger(Tracker.class);
 
-    private Connection conn = null;
+    private Connector conn = new Connector();
     private Config conf = new Config();
-
-    public void init() {
-        this.conn = Connector.connect();
-    }
 
     /**
      * Add item to store
@@ -33,22 +32,24 @@ public class Tracker {
     public Item add(final Item item) {
         int id = -1;
         try (PreparedStatement pstmt =
-                 conn.prepareStatement(conf.getQuery("insertItem"))) {
+                 conn.connect().prepareStatement(conf.getQuery("insertItem"))) {
             pstmt.setString(1, item.getName());
             pstmt.setString(2, item.getDescription());
             pstmt.executeUpdate();
-            conn.commit();
+            conn.connect().commit();
             id = lastRowId();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             try {
-                conn.rollback();
+                conn.connect().rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
+        } finally {
+            this.conn.connect();
         }
         Item insertedItem = findById(id);
-        LOG.info(String.format("Add item %s", insertedItem.toString()));
+        LOG.info("Add item {}", insertedItem);
         return insertedItem;
     }
 
@@ -60,24 +61,26 @@ public class Tracker {
      */
     public void replace(int id, final Item item) {
         try (PreparedStatement prstmt =
-                 conn.prepareStatement(conf.getQuery("replaceByID"))) {
+                 conn.connect().prepareStatement(conf.getQuery("replaceByID"))) {
             prstmt.setString(1, item.getName());
             prstmt.setString(2, item.getDescription());
             prstmt.setLong(3, item.getCreatedDate());
             prstmt.setLong(4, id);
             prstmt.executeUpdate();
-            conn.commit();
-            LOG.info(String.format("Update item with id { %d }", id));
+            conn.connect().commit();
+            LOG.info("Update item with id { {} }", id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             try {
-                conn.rollback();
+                conn.connect().rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
+        } finally {
+            this.conn.connect();
         }
         Item updatedItem = findById(id);
-        LOG.info(String.format("New values item %s", updatedItem.toString()));
+        LOG.info("New values item {}", updatedItem);
     }
 
     /**
@@ -87,18 +90,20 @@ public class Tracker {
      */
     public void delete(final int id) {
         try (PreparedStatement pstmt =
-                 conn.prepareStatement(conf.getQuery("deleteByID"))) {
+                 conn.connect().prepareStatement(conf.getQuery("deleteByID"))) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
-            conn.commit();
-            LOG.info(String.format("Delete item with id { %d }", id));
+            conn.connect().commit();
+            LOG.info("Delete item with id {}", id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             try {
-                conn.rollback();
+                conn.connect().rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
+        } finally {
+            this.conn.disconnect();
         }
     }
 
@@ -109,21 +114,13 @@ public class Tracker {
      */
     public List<Item> findAll() {
         List<Item> items = new ArrayList<>();
-        ResultSet rs = null;
-        try (PreparedStatement prstm =
-                 conn.prepareStatement(conf.getQuery("findAll"))) {
-            rs = prstm.executeQuery();
+        try (Statement st = conn.connect().createStatement();
+             ResultSet rs = st.executeQuery(conf.getQuery("findAll"))) {
             items = listItems(rs);
-            rs.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
-                }
-            }
+        } finally {
+            this.conn.disconnect();
         }
         return items;
     }
@@ -136,22 +133,16 @@ public class Tracker {
      */
     public List<Item> findByName(final String key) {
         List<Item> items = new ArrayList<>();
-        ResultSet rs = null;
         try (PreparedStatement prstm =
-                 conn.prepareStatement(conf.getQuery("findByName"))) {
+                 conn.connect().prepareStatement(conf.getQuery("findByName"))) {
             prstm.setString(1, key);
-            rs = prstm.executeQuery();
-            items = listItems(rs);
-            rs.close();
+            try (ResultSet rs = prstm.executeQuery()) {
+                items = listItems(rs);
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
-                }
-            }
+        } finally {
+            this.conn.disconnect();
         }
         return items;
     }
@@ -165,7 +156,7 @@ public class Tracker {
             item.setDescription(rs.getString("description"));
             item.setCreatedDate(rs.getLong("created_date"));
             items.add(item);
-            LOG.info("Select item { " + item.toString() + " }.");
+            LOG.info("Select item {}.", item);
         }
         return items;
     }
@@ -178,61 +169,36 @@ public class Tracker {
      */
     public Item findById(int id) {
         Item item = new Item();
-        ResultSet rs = null;
         try (PreparedStatement prstm =
-                 conn.prepareStatement(conf.getQuery("findByID"))) {
+                 conn.connect().prepareStatement(conf.getQuery("findByID"))) {
             prstm.setInt(1, id);
-            rs = prstm.executeQuery();
-            while (rs.next()) {
-                item.setId(rs.getInt("id"));
-                item.setName(rs.getString("name"));
-                item.setDescription(rs.getString("description"));
-                item.setCreatedDate(rs.getLong("created_date"));
-            }
-            LOG.info("Select item by id { " + item.toString() + " }.");
-            rs.close();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
+            try (ResultSet rs = prstm.executeQuery()) {
+                while (rs.next()) {
+                    item.setId(rs.getInt("id"));
+                    item.setName(rs.getString("name"));
+                    item.setDescription(rs.getString("description"));
+                    item.setCreatedDate(rs.getLong("created_date"));
                 }
             }
+            LOG.info("Select item by id {}.", item);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            this.conn.disconnect();
         }
         return item;
     }
 
     private int lastRowId() {
         int id = -1;
-        Statement st = null;
-        ResultSet rs = null;
-        try {
-            st = conn.createStatement();
-            rs = st.executeQuery(conf.getQuery("lastRowID"));
+        try (Statement st = conn.connect().createStatement();
+             ResultSet rs = st.executeQuery(conf.getQuery("lastRowID"))) {
             while (rs.next()) {
                 id = rs.getInt(1);
             }
-            LOG.info(String.format("Get last row id { %d }.", id));
-            rs.close();
-            st.close();
+            LOG.info("Get last row id {}.", id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
-                }
-            }
-            if (st != null) {
-                try {
-                    st.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
-                }
-            }
         }
         return id;
     }

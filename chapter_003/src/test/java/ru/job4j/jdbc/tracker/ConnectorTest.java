@@ -18,7 +18,7 @@ public class ConnectorTest {
     @Test
     public void connectToDB() throws SQLException {
         Connector connector = new Connector();
-        String url = Connector.connect().getMetaData().getURL();
+        String url = connector.connect().getMetaData().getURL();
         assertThat(url, is("jdbc:sqlite::memory"));
     }
 }

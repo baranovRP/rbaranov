@@ -42,7 +42,7 @@ public class Config {
      *
      * @return URL
      */
-    public static String getURL() {
+    public String getURL() {
         return RB.getString("db.url");
     }
 
@@ -53,7 +53,7 @@ public class Config {
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
         }
-        LOG.info(String.format("Load properties from { %s }.", String.valueOf(path)));
+        LOG.info("Load properties from { {} }.", path);
     }
 
     private String getPathToQueries() {
