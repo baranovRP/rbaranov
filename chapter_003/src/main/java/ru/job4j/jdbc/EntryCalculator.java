@@ -20,7 +20,7 @@ public class EntryCalculator {
         for (Entry entry : entries.getEntry()) {
             sum += entry.getField();
         }
-        LOG.info(String.format("Aggregated sum is: %d", sum));
+        LOG.info("Aggregated sum is: {}", sum);
         return sum;
     }
 }

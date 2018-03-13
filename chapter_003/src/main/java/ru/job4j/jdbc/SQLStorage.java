@@ -18,7 +18,7 @@ public class SQLStorage {
     private static final String TABLE = "TEST";
     private String url = "";
     private int number = 10;
-    private Connection conn = null;
+    private Connection conn;
 
     /**
      * Get connection URL
@@ -36,7 +36,7 @@ public class SQLStorage {
      */
     public void setUrl(final String url) {
         this.url = url;
-        LOG.info(String.format("Connection URL is: %s.", url));
+        LOG.info("Connection URL is: {}.", url);
     }
 
     /**
@@ -55,7 +55,7 @@ public class SQLStorage {
      */
     public void setNumber(final int number) {
         this.number = number;
-        LOG.info(String.format("Table volume is: %s records.", number));
+        LOG.info("Table volume is: {} records.", number);
     }
 
     /**
@@ -75,51 +75,46 @@ public class SQLStorage {
     public Entries getDataSet() {
         Set<Entry> entries = new HashSet<>();
         String query = String.format("SELECT * FROM %s", TABLE);
-        Statement st = null;
-        ResultSet rs = null;
-        try (Connection conn = this.connect()) {
-            st = conn.createStatement();
-            rs = st.executeQuery(query);
+        try (Statement st = this.connect().createStatement();
+             ResultSet rs = st.executeQuery(query)) {
             while (rs.next()) {
                 entries.add(new Entry(rs.getInt("field")));
             }
             LOG.info("Got dataset from DB.");
-            rs.close();
-            st.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
-                }
-            }
-            if (st != null) {
-                try {
-                    st.close();
-                } catch (SQLException e1) {
-                    LOG.error(e1.getMessage(), e1);
-                }
-            }
             try {
                 conn.rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
+        } finally {
+            this.disconnect();
         }
         return new Entries(entries);
     }
 
     private Connection connect() {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(this.url);
-            conn.setAutoCommit(false);
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
+        if (conn == null) {
+            try {
+                conn = DriverManager.getConnection(url);
+                conn.setAutoCommit(false);
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            }
         }
         return conn;
+    }
+
+    private void disconnect() {
+        if (conn != null) {
+            try {
+                conn.close();
+                conn = null;
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            }
+        }
     }
 
     private void createTableIfRequired(final String table) {
@@ -128,8 +123,7 @@ public class SQLStorage {
                 + "  field     INTEGER PRIMARY KEY"
                 + ");", table);
         String cleanTableQuery = String.format("DELETE FROM  %s", table);
-        try (Connection conn = this.connect()) {
-            Statement stmt = conn.createStatement();
+        try (Statement stmt = this.connect().createStatement()) {
             stmt.execute(createTableQuery);
             stmt.execute(cleanTableQuery);
             conn.commit();
@@ -140,26 +134,29 @@ public class SQLStorage {
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
+        } finally {
+            this.disconnect();
         }
     }
 
     private void populateTable(final String table, final int number) {
         String sql = String.format("INSERT INTO %s (field) VALUES (?);", table);
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = this.connect().prepareStatement(sql)) {
             for (int i = 1; i <= number; i++) {
                 pstmt.setString(1, String.valueOf(i));
                 pstmt.executeUpdate();
             }
             conn.commit();
-            LOG.info(String.format("Inserted %s records in DB.", number));
+            LOG.info("Inserted {} records in DB.", number);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
             try {
                 conn.rollback();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                LOG.error(e1.getMessage(), e1);
             }
+        } finally {
+            this.disconnect();
         }
     }
 }
