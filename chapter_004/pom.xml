@@ -1,8 +1,23 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.job4j</groupId>
     <artifactId>chapter_004</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+    </dependencies>
     <parent>
         <groupId>ru.job4j</groupId>
         <artifactId>junior</artifactId>
