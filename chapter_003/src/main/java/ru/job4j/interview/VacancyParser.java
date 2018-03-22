@@ -15,8 +15,6 @@ import java.util.Set;
 
 import static ru.job4j.interview.Dates.DATE_TIME_FORMATTER;
 import static ru.job4j.interview.Dates.TIME_FORMATTER;
-import static ru.job4j.interview.StringParser.getTimeText;
-import static ru.job4j.interview.StringParser.getVacancyID;
 import static ru.job4j.interview.TimeAdverb.TODAY;
 import static ru.job4j.interview.TimeAdverb.YESTERDAY;
 
@@ -68,7 +66,8 @@ public class VacancyParser {
 
     /**
      * Go through found pages
-     * @param url url
+     *
+     * @param url              url
      * @param recentCreateDate date
      * @return elements
      */
@@ -99,7 +98,7 @@ public class VacancyParser {
     private Vacancy createVacancy(final Element row) {
         Vacancy vacancy = new Vacancy();
         String href = row.select("td.postslisttopic a").attr("href");
-        vacancy.setId(Integer.valueOf(getVacancyID(href)));
+        vacancy.setId(Integer.valueOf(new StringParser().getVacancyID(href)));
         vacancy.setLink(href);
         vacancy.setTitle(row.select("td.postslisttopic").text());
         String dateText = row.select("td:last-of-type").text();
@@ -135,7 +134,7 @@ public class VacancyParser {
     private LocalDateTime adjustLocalDateTime(final String dateText) {
         LocalDate targetDate = LocalDate.now();
         LocalTime localTime =
-            Dates.parseTime(getTimeText(dateText), TIME_FORMATTER);
+            Dates.parseTime(new StringParser().getTimeText(dateText), TIME_FORMATTER);
         LocalDateTime localDateTime = LocalDateTime.of(targetDate, localTime);
         if (dateText.contains(YESTERDAY.getValue())) {
             localDateTime = localDateTime.minus(1, ChronoUnit.DAYS);

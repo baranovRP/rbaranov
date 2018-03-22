@@ -13,17 +13,13 @@ public final class StringParser {
     private static final Pattern TIME_ADVERBS_PATTERN =
         Pattern.compile("^[\\S|\\s]+\\s(\\d{1,2}:\\d{1,2})$");
 
-    private StringParser() {
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * Parse vacancy id from link
      *
      * @param rawText rawText
      * @return id
      */
-    public static String getVacancyID(final String rawText) {
+    public String getVacancyID(final String rawText) {
         return getMatcherGroup(rawText, VACANCY_ID_PATTERN);
     }
 
@@ -33,12 +29,12 @@ public final class StringParser {
      * @param rawText rawText
      * @return time
      */
-    public static String getTimeText(final String rawText) {
+    public String getTimeText(final String rawText) {
         return getMatcherGroup(rawText, TIME_ADVERBS_PATTERN);
     }
 
-    private static String getMatcherGroup(final String rawText,
-                                          final Pattern pattern) {
+    private String getMatcherGroup(final String rawText,
+                                   final Pattern pattern) {
         Matcher matcher = pattern.matcher(rawText);
         String result = "";
         if (matcher.matches()) {
