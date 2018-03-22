@@ -18,10 +18,7 @@ public class AddUsersServlet extends HttpServlet {
         resp.setContentType("text/html");
         String contextPath = req.getContextPath();
         try (PrintWriter writer = new PrintWriter(resp.getOutputStream())) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(new UserStringTemplate().fillUserTemplate(new User(),
-                String.format("%s/add", contextPath), "Add"));
-            writer.append(sb.toString());
+            writer.append(String.format("%s/add.jsp", contextPath));
             writer.flush();
         }
     }
@@ -34,6 +31,6 @@ public class AddUsersServlet extends HttpServlet {
         String login = req.getParameter("login");
         String email = req.getParameter("email");
         users.addUser(new User(name, login, email));
-        resp.sendRedirect(String.format("%s/users", contextPath));
+        resp.sendRedirect(String.format("%s/index.jsp", contextPath));
     }
 }

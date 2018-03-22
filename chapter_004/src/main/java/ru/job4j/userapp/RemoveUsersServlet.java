@@ -16,6 +16,6 @@ public class RemoveUsersServlet extends HttpServlet {
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
         users.delete(Integer.parseInt(req.getParameter("id")));
-        resp.sendRedirect(String.format("%s/users", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
     }
 }

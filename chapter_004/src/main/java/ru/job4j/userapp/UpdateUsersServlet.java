@@ -20,6 +20,6 @@ public class UpdateUsersServlet extends HttpServlet {
         String login = req.getParameter("login");
         String email = req.getParameter("email");
         users.replace(id, new User(name, login, email));
-        resp.sendRedirect(String.format("%s/users", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
     }
 }
