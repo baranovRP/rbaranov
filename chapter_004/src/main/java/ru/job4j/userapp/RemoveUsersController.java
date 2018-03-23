@@ -8,14 +8,13 @@ import java.io.IOException;
 /**
  * Remove user's servlet
  */
-public class RemoveUsersServlet extends HttpServlet {
+public class RemoveUsersController extends HttpServlet {
 
     private final UserStore users = UserStore.getInstance();
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
         users.delete(Integer.parseInt(req.getParameter("id")));
-        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

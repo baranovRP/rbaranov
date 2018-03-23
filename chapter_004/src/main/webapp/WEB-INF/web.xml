@@ -22,46 +22,46 @@
     <!--</servlet-mapping>-->
 
     <servlet>
-        <servlet-name>GetUsersServlet</servlet-name>
-        <servlet-class>ru.job4j.userapp.GetUsersServlet</servlet-class>
+        <servlet-name>GetUsersController</servlet-name>
+        <servlet-class>ru.job4j.userapp.GetUsersController</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>GetUsersServlet</servlet-name>
-        <url-pattern>/users</url-pattern>
+        <servlet-name>GetUsersController</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>AddUsersServlet</servlet-name>
-        <servlet-class>ru.job4j.userapp.AddUsersServlet</servlet-class>
+        <servlet-name>AddUsersController</servlet-name>
+        <servlet-class>ru.job4j.userapp.AddUsersController</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>AddUsersServlet</servlet-name>
+        <servlet-name>AddUsersController</servlet-name>
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UpdateUsersServlet</servlet-name>
-        <servlet-class>ru.job4j.userapp.UpdateUsersServlet</servlet-class>
+        <servlet-name>UpdateUsersController</servlet-name>
+        <servlet-class>ru.job4j.userapp.UpdateUsersController</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>UpdateUsersServlet</servlet-name>
+        <servlet-name>UpdateUsersController</servlet-name>
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>RemoveUsersServlet</servlet-name>
-        <servlet-class>ru.job4j.userapp.RemoveUsersServlet</servlet-class>
+        <servlet-name>RemoveUsersController</servlet-name>
+        <servlet-class>ru.job4j.userapp.RemoveUsersController</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>RemoveUsersServlet</servlet-name>
+        <servlet-name>RemoveUsersController</servlet-name>
         <url-pattern>/remove</url-pattern>
     </servlet-mapping>
 </web-app>
