@@ -1,4 +1,6 @@
-package ru.job4j.userapp;
+package ru.job4j.userapp.servlets;
+
+import ru.job4j.userapp.UserDaoImpl;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +12,9 @@ import java.io.IOException;
  */
 public class RemoveUsersController extends HttpServlet {
 
-    private final UserStore users = UserStore.getInstance();
-
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
-        users.delete(Integer.parseInt(req.getParameter("id")));
+        new UserDaoImpl().deleteUser(Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

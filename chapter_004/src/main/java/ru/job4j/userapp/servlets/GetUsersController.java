@@ -1,4 +1,7 @@
-package ru.job4j.userapp;
+package ru.job4j.userapp.servlets;
+
+import ru.job4j.userapp.RoleDaoImpl;
+import ru.job4j.userapp.UserDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +14,11 @@ import java.io.IOException;
  */
 public class GetUsersController extends HttpServlet {
 
-    private final UserStore users = UserStore.getInstance();
-
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("users", users.getAll());
+        req.setAttribute("users", new UserDaoImpl().getAllUsers());
+        req.setAttribute("roles", new RoleDaoImpl().getAllRoles());
+        req.setAttribute("role", req.getSession().getAttribute("role"));
         req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
     }
 }
