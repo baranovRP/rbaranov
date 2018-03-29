@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * DbStore class to interact with database.
@@ -31,16 +33,27 @@ public class DbStore {
             + "  create_date  TIMESTAMP              NOT NULL DEFAULT now()\n"
             + ")";
 
-    private static final String CREATE_AND_INIT_ROLES_TABLE =
+    private static final String CREATE_ROLES_TABLE =
         "CREATE TABLE IF NOT EXISTS roles (\n"
             + "  role CHARACTER VARYING(100) PRIMARY KEY\n"
-            + ");\n"
+            + ");";
+
+    private static final String INIT_ROLES_TABLE =
+        "INSERT INTO roles (role)\n"
+            + "  SELECT 'ADMIN'\n"
+            + "  WHERE NOT exists(SELECT 1\n"
+            + "                   FROM roles\n"
+            + "                   WHERE role = 'ADMIN');\n"
             + "INSERT INTO roles (role)\n"
-            + "VALUES ('ADMIN');\n"
+            + "  SELECT 'USER'\n"
+            + "  WHERE NOT exists(SELECT 1\n"
+            + "                   FROM roles\n"
+            + "                   WHERE role = 'USER');\n"
             + "INSERT INTO roles (role)\n"
-            + "VALUES ('USER');\n"
-            + "INSERT INTO roles (role)\n"
-            + "VALUES ('GUEST');";
+            + "  SELECT 'GUEST'\n"
+            + "  WHERE NOT exists(SELECT 1\n"
+            + "                   FROM roles\n"
+            + "                   WHERE role = 'GUEST');";
 
     private static final String ADD_USER =
         "INSERT INTO users (name, login, passw, email, user_role)\n"
@@ -49,7 +62,7 @@ public class DbStore {
     private static final String GET_ALL_USERS =
         "SELECT *\n"
             + "FROM users\n"
-            + "ORDER BY email";
+            + "ORDER BY id";
 
     private static final String GET_ALL_ROLES = "SELECT *\nFROM roles";
 
@@ -118,8 +131,8 @@ public class DbStore {
      *
      * @return list of users
      */
-    public Set<User> getAllUsers() {
-        Set<User> users = new HashSet<>();
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(GET_ALL_USERS)) {
             while (rs.next()) {
@@ -293,9 +306,10 @@ public class DbStore {
         return user;
     }
 
-    private void initDB() {
+    public void initDB() {
         try (Statement stmt = conn.createStatement()) {
-            stmt.execute(CREATE_AND_INIT_ROLES_TABLE);
+            stmt.execute(CREATE_ROLES_TABLE);
+            stmt.execute(INIT_ROLES_TABLE);
             stmt.execute(CREATE_USERS_TABLE);
             conn.commit();
             LOG.info("Create table if required.");
@@ -309,7 +323,23 @@ public class DbStore {
         }
     }
 
-    private void addRootIfRequired() {
+    public void cleanDB() {
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute("DROP TABLE users");
+            stmt.execute("DROP TABLE roles");
+            conn.commit();
+            LOG.info("Clean database.");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                LOG.error(e1.getMessage(), e1);
+            }
+        }
+    }
+
+    public void addRootIfRequired() {
         if (findFirstByLogin("root") == null) {
             addUser(new User("root", "root", "root",
                 "root@email.com", Role.ADMIN));

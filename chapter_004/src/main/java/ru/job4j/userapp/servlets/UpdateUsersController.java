@@ -40,7 +40,7 @@ public class UpdateUsersController extends HttpServlet {
         User user = new User(id, name, login, passw, email, role);
         if (currentRole.equals(Role.ADMIN)) {
             new UserDaoImpl().updateUser(user);
-        } else if (isUserHasPrivileges(currentLogin, currentRole, user)) {
+        } else if (isUserHasPrivileges(currentLogin, currentRole, user.getLogin())) {
             new UserDaoImpl().updateUser(user);
         } else {
             req.setAttribute("error",
@@ -51,8 +51,8 @@ public class UpdateUsersController extends HttpServlet {
     }
 
     private boolean isUserHasPrivileges(final String currentLogin,
-                                        final Role currentRole, final User user) {
-        return currentRole.equals(Role.USER) && currentLogin.equals(user.getLogin())
+                                        final Role currentRole, final String userLogin) {
+        return currentRole.equals(Role.USER) && currentLogin.equals(userLogin)
             && !currentRole.equals(Role.ADMIN);
     }
 }
