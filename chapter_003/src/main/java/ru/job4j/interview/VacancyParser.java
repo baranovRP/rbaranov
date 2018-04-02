@@ -30,6 +30,7 @@ public class VacancyParser {
 
     private PageGrabber pageGrabber = new PageGrabber();
     private Config config = new Config();
+    private StringParser parser = new StringParser();
 
     /**
      * Grab vacancy from HTML row
@@ -98,7 +99,7 @@ public class VacancyParser {
     private Vacancy createVacancy(final Element row) {
         Vacancy vacancy = new Vacancy();
         String href = row.select("td.postslisttopic a").attr("href");
-        vacancy.setId(Integer.valueOf(new StringParser().getVacancyID(href)));
+        vacancy.setId(Integer.valueOf(parser.getVacancyID(href)));
         vacancy.setLink(href);
         vacancy.setTitle(row.select("td.postslisttopic").text());
         String dateText = row.select("td:last-of-type").text();
@@ -134,7 +135,7 @@ public class VacancyParser {
     private LocalDateTime adjustLocalDateTime(final String dateText) {
         LocalDate targetDate = LocalDate.now();
         LocalTime localTime =
-            Dates.parseTime(new StringParser().getTimeText(dateText), TIME_FORMATTER);
+            new Dates().parseTime(parser.getTimeText(dateText), TIME_FORMATTER);
         LocalDateTime localDateTime = LocalDateTime.of(targetDate, localTime);
         if (dateText.contains(YESTERDAY.getValue())) {
             localDateTime = localDateTime.minus(1, ChronoUnit.DAYS);

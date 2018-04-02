@@ -16,10 +16,6 @@ public final class Dates {
     public static final DateTimeFormatter TIME_FORMATTER =
         DateTimeFormatter.ofPattern("HH:mm", new Locale("ru", "RU"));
 
-    private Dates() {
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * Parse date and time from string
      *
@@ -27,8 +23,8 @@ public final class Dates {
      * @param format   date formatter
      * @return local date time
      */
-    public static LocalDateTime parseDateTime(final String dateText,
-                                              final DateTimeFormatter format) {
+    public LocalDateTime parseDateTime(final String dateText,
+                                       final DateTimeFormatter format) {
         return LocalDateTime.parse(dateText, format);
     }
 
@@ -39,8 +35,8 @@ public final class Dates {
      * @param format   date formatter
      * @return local date
      */
-    public static LocalDate parseDate(final String dateText,
-                                      final DateTimeFormatter format) {
+    public LocalDate parseDate(final String dateText,
+                               final DateTimeFormatter format) {
         return LocalDate.parse(dateText, format);
     }
 
@@ -51,8 +47,8 @@ public final class Dates {
      * @param format   date formatter
      * @return local time
      */
-    public static LocalTime parseTime(final String dateText,
-                                      final DateTimeFormatter format) {
+    public LocalTime parseTime(final String dateText,
+                               final DateTimeFormatter format) {
         return LocalTime.parse(dateText, format);
     }
 }
