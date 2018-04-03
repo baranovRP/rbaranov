@@ -31,6 +31,7 @@ public class VacancyParser {
     private PageGrabber pageGrabber = new PageGrabber();
     private Config config = new Config();
     private StringParser parser = new StringParser();
+    private Dates dates = new Dates();
 
     /**
      * Grab vacancy from HTML row
@@ -135,7 +136,7 @@ public class VacancyParser {
     private LocalDateTime adjustLocalDateTime(final String dateText) {
         LocalDate targetDate = LocalDate.now();
         LocalTime localTime =
-            new Dates().parseTime(parser.getTimeText(dateText), TIME_FORMATTER);
+            dates.parseTime(parser.getTimeText(dateText), TIME_FORMATTER);
         LocalDateTime localDateTime = LocalDateTime.of(targetDate, localTime);
         if (dateText.contains(YESTERDAY.getValue())) {
             localDateTime = localDateTime.minus(1, ChronoUnit.DAYS);
