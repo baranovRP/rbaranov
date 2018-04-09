@@ -7,19 +7,46 @@ import java.sql.Date;
  */
 public class User {
 
-    private int id;
+    private Integer id;
     private String name;
     private String login;
+    private String passw;
     private String email;
+    private Role role;
     private Date createDate;
 
     public User() {
     }
 
-    public User(final String name, final String login, final String email) {
+    public User(final String name, final String login, final String passw,
+                final String email, final Role role) {
         this.name = name;
         this.login = login;
+        this.passw = passw;
         this.email = email;
+        this.role = role;
+    }
+
+    public User(final Integer id, final String name, final String login,
+                final String passw, final String email, final Role role) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.passw = passw;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User(final Integer id, final String name, final String login,
+                final String passw, final String email, final Role role,
+                final Date createDate) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.passw = passw;
+        this.email = email;
+        this.role = role;
+        this.createDate = createDate;
     }
 
     @Override
@@ -31,35 +58,33 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return id == user.id
+        return (id != null ? id.equals(user.id) : user.id == null)
             && (name != null ? name.equals(user.name) : user.name == null)
             && (login != null ? login.equals(user.login) : user.login == null)
+            && (passw != null ? passw.equals(user.passw) : user.passw == null)
             && (email != null ? email.equals(user.email) : user.email == null)
+            && role == user.role
             && (createDate != null
             ? createDate.equals(user.createDate) : user.createDate == null);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (passw != null ? passw.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
         return result;
     }
 
-    @Override
-    public String toString() {
-        return String.format("User{id=%d, name='%s', login='%s', email='%s', "
-            + "createDate=%s}", id, name, login, email, createDate);
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(final int id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -79,12 +104,28 @@ public class User {
         this.login = login;
     }
 
+    public String getPassw() {
+        return passw;
+    }
+
+    public void setPassw(final String passw) {
+        this.passw = passw;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(final Role role) {
+        this.role = role;
     }
 
     public Date getCreateDate() {
