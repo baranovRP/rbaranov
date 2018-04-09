@@ -1,12 +1,12 @@
 package ru.job4j.userapp;
 
-import java.util.Set;
+import java.util.List;
 
 public interface UserDao {
 
     User getUser(Integer id);
 
-    Set<User> getAllUsers();
+    List<User> getAllUsers();
 
     User getUserByUserLoginAndPassw(String login, String passw);
 

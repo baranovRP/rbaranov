@@ -15,3 +15,8 @@ notifications:
       - baranov.rp@gmail.com
     on_success: never # default: change
     on_failure: always # default: always
+
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database users;' -U postgres

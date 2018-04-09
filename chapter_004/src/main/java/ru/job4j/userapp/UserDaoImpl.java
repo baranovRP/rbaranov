@@ -1,7 +1,7 @@
 package ru.job4j.userapp;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public class UserDaoImpl implements UserDao {
 
@@ -12,7 +12,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Set<User> getAllUsers() {
+    public List<User> getAllUsers() {
         return DbStore.getInstance().getAllUsers();
     }
 
