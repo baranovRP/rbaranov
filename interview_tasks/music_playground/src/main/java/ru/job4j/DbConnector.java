@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 /**
@@ -39,7 +41,7 @@ public class DbConnector {
     }
 
     public void initDB() {
-        try (Statement stmt = conn.createStatement()) {
+        try (Statement stmt = connect().createStatement()) {
             stmt.execute(RB_SQL.getString("create.table.role"));
             stmt.execute(RB_SQL.getString("init.role"));
             stmt.execute(RB_SQL.getString("create.table.music_type"));
@@ -50,12 +52,12 @@ public class DbConnector {
             stmt.execute(RB_SQL.getString("init.users"));
             stmt.execute(RB_SQL.getString("create.table.catalog"));
             stmt.execute(RB_SQL.getString("init.catalog"));
-            conn.commit();
+            connect().commit();
             LOG.info("Create table if required.");
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             try {
-                conn.rollback();
+                connect().rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
@@ -63,18 +65,18 @@ public class DbConnector {
     }
 
     public void cleanDB() {
-        try (Statement stmt = conn.createStatement()) {
+        try (Statement stmt = connect().createStatement()) {
             stmt.execute(RB_SQL.getString("drop.cascade.role"));
             stmt.execute(RB_SQL.getString("drop.cascade.music_type"));
             stmt.execute(RB_SQL.getString("drop.cascade.address"));
             stmt.execute(RB_SQL.getString("drop.cascade.catalog"));
             stmt.execute(RB_SQL.getString("drop.cascade.users"));
-            conn.commit();
+            connect().commit();
             LOG.info("Clean database.");
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             try {
-                conn.rollback();
+                connect().rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
@@ -120,7 +122,7 @@ public class DbConnector {
         }
     }
 
-    private void disconnect() {
+    public void disconnect() {
         if (conn != null) {
             try {
                 conn.close();

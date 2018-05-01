@@ -10,7 +10,10 @@ import ru.job4j.model.MusicType;
 import ru.job4j.model.Role;
 import ru.job4j.model.User;
 
-import java.sql.*;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,7 @@ public class UserRepository {
     private static final Logger LOG = LoggerFactory.getLogger(UserRepository.class);
 
     private static final ResourceBundle RB_USER_SQL = ResourceBundle.getBundle("users");
-    private Connection conn = DbConnector.getInstance().connect();
+    private DbConnector conn = DbConnector.getInstance();
 
     private UserDao userDao = new UserDaoImpl();
     private AddressDaoImpl addressDao = new AddressDaoImpl();
@@ -93,7 +96,7 @@ public class UserRepository {
     public List<User> findByAddressPart(final String address) {
         String searchCondition = "%" + address + "%";
         List<UserDto> users = new ArrayList<>();
-        try (PreparedStatement pstmt = conn.prepareStatement(
+        try (PreparedStatement pstmt = conn.connect().prepareStatement(
             RB_USER_SQL.getString("select.by.address.string"))) {
             pstmt.setString(1, searchCondition);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -115,7 +118,7 @@ public class UserRepository {
 
     public User findByEmailPassw(final String email, final String passw) {
         UserDto userDto = new UserDto();
-        try (PreparedStatement pstmt = conn.prepareStatement(
+        try (PreparedStatement pstmt = conn.connect().prepareStatement(
             RB_USER_SQL.getString("select.user.by.email.passw"))) {
             pstmt.setString(1, email);
             pstmt.setString(2, passw);
@@ -143,7 +146,7 @@ public class UserRepository {
 
     private List<User> findByConditionId(final String propName, final Long id) {
         List<UserDto> users = new ArrayList<>();
-        try (PreparedStatement pstmt = conn.prepareStatement(
+        try (PreparedStatement pstmt = conn.connect().prepareStatement(
             RB_USER_SQL.getString(propName))) {
             pstmt.setLong(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
