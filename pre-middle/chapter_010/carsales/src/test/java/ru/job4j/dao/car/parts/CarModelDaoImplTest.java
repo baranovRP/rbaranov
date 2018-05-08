@@ -1,0 +1,23 @@
+package ru.job4j.dao.car.parts;
+
+import org.junit.Test;
+import ru.job4j.models.car.parts.CarModel;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
+
+public class CarModelDaoImplTest {
+
+    @Test
+    public void findOne() {
+        CarModel carModel = new CarModelDaoImpl().findOne(1L);
+        assertThat(carModel.getName(), is("5-series"));
+        assertThat(carModel.getManufacture().getName(), is("BMW"));
+    }
+
+    @Test
+    public void findAll() {
+        assertThat(new CarModelDaoImpl().findAll(), hasSize(25));
+    }
+}

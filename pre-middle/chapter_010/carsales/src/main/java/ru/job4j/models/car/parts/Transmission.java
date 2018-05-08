@@ -1,10 +1,10 @@
-package ru.job4j.models;
+package ru.job4j.models.car.parts;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * Class Transmission model.
+ * Class represent Transmission.
  */
 public class Transmission {
 
@@ -20,7 +20,8 @@ public class Transmission {
         this.description = description;
     }
 
-    public Transmission(final Long id, final String type, final String description) {
+    public Transmission(final Long id, final String type,
+                        final String description) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -80,4 +81,21 @@ public class Transmission {
             .add("description = " + description)
             .toString();
     }
+
+//    enum Type {
+//        AUTOMATIC,
+//        MANUAL,
+//        SEMI_AUTO,
+//        OTHER;
+//
+//        public Type typeFromTitle(final String title) {
+//            for (Type type : Type.values()) {
+//                if (type.name().equalsIgnoreCase(title)) {
+//                    return type;
+//                }
+//            }
+//            throw new IllegalArgumentException(
+//                String.format("Unknown Transmission.Type with Title: %s", title));
+//        }
+//    }
 }

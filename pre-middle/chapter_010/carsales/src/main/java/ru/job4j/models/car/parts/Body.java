@@ -1,26 +1,27 @@
-package ru.job4j.models;
+package ru.job4j.models.car.parts;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * Class Gearbox model.
+ * Class represent Body.
  */
-public class Gearbox {
+public class Body {
 
     private Long id;
     private String type;
     private String description;
 
-    public Gearbox() {
+    public Body() {
     }
 
-    public Gearbox(final String type, final String description) {
+    public Body(final String type, final String description) {
         this.type = type;
         this.description = description;
     }
 
-    public Gearbox(final Long id, final String type, final String description) {
+    public Body(final Long id, final String type,
+                        final String description) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -30,7 +31,7 @@ public class Gearbox {
         return id;
     }
 
-    public Gearbox setId(final Long id) {
+    public Body setId(final Long id) {
         this.id = id;
         return this;
     }
@@ -39,7 +40,7 @@ public class Gearbox {
         return type;
     }
 
-    public Gearbox setType(final String type) {
+    public Body setType(final String type) {
         this.type = type;
         return this;
     }
@@ -48,7 +49,7 @@ public class Gearbox {
         return description;
     }
 
-    public Gearbox setDescription(final String description) {
+    public Body setDescription(final String description) {
         this.description = description;
         return this;
     }
@@ -61,7 +62,7 @@ public class Gearbox {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Gearbox that = (Gearbox) o;
+        Body that = (Body) o;
         return Objects.equals(this.id, that.id)
             && Objects.equals(this.type, that.type)
             && Objects.equals(this.description, that.description);
@@ -80,4 +81,24 @@ public class Gearbox {
             .add("description = " + description)
             .toString();
     }
+
+//    enum Type {
+//        HATCHBACK,
+//        SALOON,
+//        ESTATE,
+//        MPV,
+//        COUPE,
+//        CONVERTIBLE,
+//        OTHER;
+//
+//        public Type typeFromTitle(final String title) {
+//            for (Type type : Type.values()) {
+//                if (type.name().equalsIgnoreCase(title)) {
+//                    return type;
+//                }
+//            }
+//            throw new IllegalArgumentException(
+//                String.format("Unknown Body.Type with Title: %s", title));
+//        }
+//    }
 }
