@@ -8,16 +8,24 @@
             <column name="id"/>
             <generator class="identity"/>
         </id>
-        <many-to-one name="body" column="BODY_ID"
+        <many-to-one name="body" column="BODY_ID" lazy="false"
                      class="ru.job4j.models.car.parts.Body" not-null="true"/>
+
         <many-to-one name="category" column="CATEGORY_ID"
-                     class="ru.job4j.models.car.parts.Category" not-null="true"/>
-        <many-to-one name="fuel" column="FUEL_ID"
+                     lazy="false" class="ru.job4j.models.car.parts.Category"
+                     not-null="true"/>
+
+        <many-to-one name="fuel" column="FUEL_ID" lazy="false"
                      class="ru.job4j.models.car.parts.Fuel" not-null="true"/>
-        <many-to-one name="carModel" column="MODEL_ID"
-                     class="ru.job4j.models.car.parts.CarModel" not-null="true"/>
-        <many-to-one name="transmission" column="TRANSMISSION_ID"
-                     class="ru.job4j.models.car.parts.Transmission" not-null="true"/>
+
+        <many-to-one name="carModel" column="MODEL_ID" lazy="false"
+                     class="ru.job4j.models.car.parts.CarModel"
+                     not-null="true"/>
+
+        <many-to-one name="transmission" column="TRANSMISSION_ID" lazy="false"
+                     class="ru.job4j.models.car.parts.Transmission"
+                     not-null="true"/>
+
         <property name="engineSize" column="ENGINE_SIZE"/>
         <property name="mileage" column="MILEAGE"/>
         <property name="year" column="YEAR"/>

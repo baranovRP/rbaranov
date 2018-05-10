@@ -1,11 +1,9 @@
-package ru.job4j.dao.car.parts;
-
-import ru.job4j.dao.AbstractDao;
+package ru.job4j.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class CarPartDaoImpl<T> implements AbstractDao<T> {
+public abstract class FetchDaoImpl<T> implements FetchDao<T> {
 
     private final Class<T> persistentClass =
         (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())

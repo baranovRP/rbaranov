@@ -9,7 +9,7 @@
             <generator class="identity"/>
         </id>
         <property name="name" column="NAME"/>
-        <many-to-one name="manufacture" column="MANUFACTURE_ID" fetch="join"
+        <many-to-one name="manufacture" column="MANUFACTURE_ID" lazy="false"
                      class="ru.job4j.models.car.parts.Manufacture"
                      not-null="true"/>
     </class>
