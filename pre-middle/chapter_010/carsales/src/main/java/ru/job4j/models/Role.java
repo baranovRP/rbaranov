@@ -9,16 +9,16 @@ import java.util.StringJoiner;
 public class Role {
 
     private Long id;
-    private Type type;
+    private String type;
 
     public Role() {
     }
 
-    public Role(final Type type) {
+    public Role(final String type) {
         this.type = type;
     }
 
-    public Role(final Long id, final Type type) {
+    public Role(final Long id, final String type) {
         this.id = id;
         this.type = type;
     }
@@ -32,11 +32,11 @@ public class Role {
         return this;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public Role setType(final Type type) {
+    public Role setType(final String type) {
         this.type = type;
         return this;
     }
@@ -67,18 +67,18 @@ public class Role {
             .toString();
     }
 
-    enum Type {
-        USER,
-        GUEST;
-
-        public Type typeFromTitle(final String title) {
-            for (Type type : Type.values()) {
-                if (type.name().equalsIgnoreCase(title)) {
-                    return type;
-                }
-            }
-            throw new IllegalArgumentException(
-                String.format("Unknown Role.Type with Title: %s", title));
-        }
-    }
+//    enum String {
+//        USER,
+//        GUEST;
+//
+//        public Type typeFromTitle(final String title) {
+//            for (Type type : Type.values()) {
+//                if (type.name().equalsIgnoreCase(title)) {
+//                    return type;
+//                }
+//            }
+//            throw new IllegalArgumentException(
+//                String.format("Unknown Role.Type with Title: %s", title));
+//        }
+//    }
 }
