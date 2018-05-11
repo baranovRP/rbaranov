@@ -10,7 +10,7 @@
         </id>
         <property name="email" column="EMAIL"/>
         <property name="passw" column="PASSW"/>
-        <many-to-one name="role" column="ROLE_ID"
+        <many-to-one name="role" column="ROLE_ID" lazy="false"
                      class="ru.job4j.models.Role" not-null="true"/>
         <property name="phone" column="PHONE"/>
     </class>

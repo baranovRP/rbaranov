@@ -138,7 +138,8 @@ public class Post {
             && Objects.equals(this.car, that.car)
             && Objects.equals(this.user, that.user)
             && Objects.equals(this.publishDate, that.publishDate)
-            && Objects.equals(this.pictures, that.pictures);
+            && this.pictures != null
+            ? this.pictures.containsAll(that.pictures) : that.pictures == null;
     }
 
     @Override

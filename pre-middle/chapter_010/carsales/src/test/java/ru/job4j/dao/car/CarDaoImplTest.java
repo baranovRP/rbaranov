@@ -1,16 +1,23 @@
 package ru.job4j.dao.car;
 
+import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.dao.car.parts.*;
 import ru.job4j.models.car.Car;
+import ru.job4j.models.car.parts.CarModel;
 
 import java.sql.Timestamp;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 public class CarDaoImplTest {
+
+    @Before
+    public void setUp() {
+    }
 
     @Test
     public void findOne() {
@@ -20,7 +27,7 @@ public class CarDaoImplTest {
 
     @Test
     public void findAll() {
-        assertThat(new CarDaoImpl().findAll(), hasSize(7));
+        assertThat(new CarDaoImpl().findAll().size(), greaterThanOrEqualTo(1));
     }
 
     @Test
@@ -41,6 +48,12 @@ public class CarDaoImplTest {
 
     @Test
     public void update() {
+        Car car = new CarDaoImpl().findOne(2L);
+        CarModel oldModel = car.getCarModel();
+        car.setCarModel(new CarModelDaoImpl().findOne(5L));
+        new CarDaoImpl().update(car);
+        Car updatedCar = new CarDaoImpl().findOne(1L);
+        assertThat(oldModel, not(updatedCar.getCarModel()));
     }
 
     public void updateAll() {

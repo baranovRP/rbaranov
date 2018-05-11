@@ -11,12 +11,12 @@
         <property name="content" column="CONTENT"/>
         <property name="price" column="PRICE"/>
         <property name="isActive" column="IS_ACTIVE"/>
-        <many-to-one name="car" column="CAR_ID"
+        <many-to-one name="car" column="CAR_ID" lazy="false"
                      class="ru.job4j.models.car.Car" not-null="true"/>
-        <many-to-one name="user" column="USER_ID"
+        <many-to-one name="user" column="USER_ID" lazy="false"
                      class="ru.job4j.models.User" not-null="true"/>
         <property name="publishDate" column="PUBLISH_DATE"/>
-        <bag name="pictures" inverse="true">
+        <bag name="pictures" inverse="true" lazy="false">
             <key column="POST_ID" not-null="true"/>
             <one-to-many class="ru.job4j.models.Picture"/>
         </bag>
