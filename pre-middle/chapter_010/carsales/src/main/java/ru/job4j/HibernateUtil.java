@@ -32,7 +32,7 @@ public class HibernateUtil {
         return SESSION_FACTORY;
     }
 
-    public void closeSessionFactory() {
+    public static void closeSessionFactory() {
         try {
             SESSION_FACTORY.close();
         } catch (Exception e) {
