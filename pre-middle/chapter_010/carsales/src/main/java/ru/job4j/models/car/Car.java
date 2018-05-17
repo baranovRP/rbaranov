@@ -2,7 +2,6 @@ package ru.job4j.models.car;
 
 import ru.job4j.models.car.parts.*;
 
-import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -19,14 +18,14 @@ public class Car {
     private Transmission transmission;
     private Double engineSize;
     private Long mileage;
-    private Timestamp year;
+    private Integer year;
 
     public Car() {
     }
 
     public Car(final Body body, final Category category, final Fuel fuel,
                final CarModel carModel, final Transmission transmission,
-               final Double engineSize, final Long mileage, final Timestamp year) {
+               final Double engineSize, final Long mileage, final Integer year) {
         this.body = body;
         this.category = category;
         this.fuel = fuel;
@@ -39,7 +38,7 @@ public class Car {
 
     public Car(final Long id, final Body body, final Category category,
                final Fuel fuel, final CarModel carModel, final Transmission transmission,
-               final Double engineSize, final Long mileage, final Timestamp year) {
+               final Double engineSize, final Long mileage, final Integer year) {
         this.id = id;
         this.body = body;
         this.category = category;
@@ -123,11 +122,11 @@ public class Car {
         return this;
     }
 
-    public Timestamp getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public Car setYear(final Timestamp year) {
+    public Car setYear(final Integer year) {
         this.year = year;
         return this;
     }

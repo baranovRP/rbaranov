@@ -6,12 +6,8 @@ import ru.job4j.dao.car.parts.*;
 import ru.job4j.models.car.Car;
 import ru.job4j.models.car.parts.CarModel;
 
-import java.sql.Timestamp;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 
 public class CarDaoImplTest {
 
@@ -39,7 +35,7 @@ public class CarDaoImplTest {
             .setTransmission(new TransmissionDaoImpl().findOne(2L))
             .setEngineSize(4.0)
             .setMileage(30000L)
-            .setYear(new Timestamp(System.currentTimeMillis()));
+            .setYear(2008);
         Long id = new CarDaoImpl().create(car);
         car.setId(id);
         Car savedCar = new CarDaoImpl().findOne(id);

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS cars (
     transmission_id INTEGER          NOT NULL REFERENCES transmission (id) ON DELETE SET NULL,
     engine_size     DOUBLE PRECISION NOT NULL,
     mileage         INTEGER          NOT NULL,
-    year            TIMESTAMP        NOT NULL
+    year            INTEGER          NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS role (

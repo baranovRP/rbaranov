@@ -1,3 +1,7 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
 html,
 body {
     margin: 0;
@@ -26,7 +30,7 @@ body {
     background: #f5f5f5;
     color: #4d4d4d;
     min-width: 230px;
-    max-width: 550px;
+    max-width: 800px;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -117,12 +121,14 @@ body {
     list-style: none;
 }
 
-.post-list::before, .post-list::after {
-    box-sizing: border-box;
-}
-
 .post-list > li {
     display: inline;
+}
+
+.article-wrapper {
+    display: block;
+    color: #3c3241;
+    padding-top: 12px;
 }
 
 article {
@@ -130,12 +136,36 @@ article {
     display: block;
 }
 
-article::before, article::after {
-    box-sizing: border-box;
+.post-pic {
+    width: 120px;
+    margin-right: 16px;
+    float: left;
 }
 
-.post-content::before, .post-content::after {
-    box-sizing: border-box;
+.post-thumbnail {
+    width: 100%;
+    float: left;
+    height: 92px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #d8d6d9;
+}
+
+.post-thumbnail > img {
+    width: auto;
+    max-width: inherit;
+    position: absolute;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+.post-content {
+    min-height: 92px;
+    overflow: hidden;
 }
 
 .post-title {
@@ -167,18 +197,10 @@ article::before, article::after {
     padding: 0;
 }
 
-.post-attributes::before, .post-attributes::after {
-    box-sizing: border-box;
-}
-
 .post-attributes > li {
     display: inline;
     margin-right: 4px;
     list-style: none;
-}
-
-.post-attributes > li::before, .post-attributes > li::after {
-    box-sizing: border-box;
 }
 
 span {
@@ -187,10 +209,6 @@ span {
 
 .post-attributes > li > span {
     color: #3c3241;
-}
-
-.post-attributes > li > span::before, .post-attributes > li > span::after {
-    box-sizing: border-box;
 }
 
 .post-attributes > li > span::after {

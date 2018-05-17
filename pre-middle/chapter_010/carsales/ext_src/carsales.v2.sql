@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS cars (
 );
 
 INSERT INTO cars (body_id, category_id, fuel_id, model_id, transmission_id, engine_size, mileage, year)
-VALUES (1, 1, 1, 1, 1, 1.2, 78000, '2008-01-01 00:00:00');
+VALUES (1, 1, 1, 1, 1, 1.2, 78000, '2008');
 
 
 DROP TABLE IF EXISTS role CASCADE;

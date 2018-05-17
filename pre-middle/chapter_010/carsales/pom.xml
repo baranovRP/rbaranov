@@ -42,7 +42,7 @@
             <properties>
                 <postgresql.host>localhost</postgresql.host>
                 <postgresql.port>5432</postgresql.port>
-                <postgresql.db>sales_car_platform_test</postgresql.db>
+                <postgresql.db>sales_car_platform</postgresql.db>
             </properties>
             <build>
                 <plugins>
