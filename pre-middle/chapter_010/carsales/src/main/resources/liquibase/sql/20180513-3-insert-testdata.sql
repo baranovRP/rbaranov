@@ -1,9 +1,9 @@
 -- insert cars
 INSERT INTO cars (body_id, category_id, fuel_id, model_id, transmission_id, engine_size, mileage, year)
-VALUES (1, 1, 1, 1, 1, 1.2, 78000, 2008);
+VALUES (2, 2, 2, 2, 2, 1.2, 78000, 2008);
 
 INSERT INTO cars (body_id, category_id, fuel_id, model_id, transmission_id, engine_size, mileage, year)
-VALUES (2, 1, 3, 2, 1, 2.2, 78000, 2015);
+VALUES (3, 2, 4, 3, 2, 2.2, 78000, 2015);
 
 -- insert users
 INSERT INTO users (email, passw, role_id, phone) VALUES (

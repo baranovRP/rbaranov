@@ -31,8 +31,8 @@ var postStorage = {
         })
     },
     add: function (post) {
-        fetch('add', {
-            method: 'POST',
+        fetch('postad', {
+            method: 'GET',
             body: JSON.stringify(post)
         }).then(function (data) {
             return console.log(data);

@@ -8,4 +8,13 @@
         <servlet-name>ListPostsController</servlet-name>
         <url-pattern>/list</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AddPostController</servlet-name>
+        <servlet-class>ru.job4j.controllers.AddPostController</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddPostController</servlet-name>
+        <url-pattern>/postad</url-pattern>
+    </servlet-mapping>
 </web-app>
