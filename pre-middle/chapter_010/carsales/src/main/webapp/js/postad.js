@@ -1,7 +1,7 @@
 'use strict';
 
 var postStorage = {
-    fetch: function (that) {
+    fetch(that) {
         fetch('postad').then(function (response) {
             return response.json()
         }).then(function (result) {
@@ -14,6 +14,23 @@ var postStorage = {
         }).catch(function (err) {
             return console.error(err);
         })
+    },
+    postad(formdata) {
+        var request = new XMLHttpRequest();
+        request.open('POST', 'postad');
+        request.send(formdata);
+        // fetch('postad', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+        //         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+        //     },
+        //     body: formdata
+        // }).then(function (data) {
+        //     return console.log(data);
+        // }).catch(function (err) {
+        //     return console.error(err);
+        // })
     }
 }
 
@@ -42,7 +59,7 @@ var app = new Vue({
                 fuel: {
                     id: 1
                 },
-                carmodel: {
+                carModel: {
                     id: 1,
                     manufacture: {
                         id: 1
@@ -53,24 +70,24 @@ var app = new Vue({
                 },
                 engineSize: 0.0,
                 mileage: 0,
-                year: 2008
+                year: 2015
             },
             user: {
                 email: '',
                 phone: ''
-            },
-            pictures: []
-        }
+            }
+        },
+        pictures: []
     },
 
-    created: function () {
+    created() {
         var that = this
         postStorage.fetch(that);
     },
 
     computed: {
         models: {
-            get: function () {
+            get() {
                 var that = this
                 return this.carmodels.filter(function (c) {
                     if (c.manufacture.id == that.selectedManufacture) {
@@ -78,15 +95,27 @@ var app = new Vue({
                     }
                 })
             },
-            set: function (event) {
+            set(event) {
                 // this.models = this.models
             }
         }
     },
 
     methods: {
-        onChange: function (e) {
+        onChange(e) {
             this.selectedManufacture = event.srcElement.value
+        },
+        onSubmit(e) {
+            event.preventDefault();
+            var formdata = new FormData()
+            // this.pictures.forEach(function (value) {
+            //     formdata.append(value.name, value)
+            // })
+            this.pictures.forEach(function (value, idx) {
+                formdata.append("pic" + idx, value, value.name)
+            })
+            formdata.append("postad", JSON.stringify(this.postad))
+            postStorage.postad(formdata)
         }
     },
 
@@ -106,6 +135,19 @@ var app = new Vue({
         }
     }
 })
+
+function getBase64Image(img) {
+    var canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    var dataURL = canvas.toDataURL('image/png');
+
+    return dataURL;
+}
 
 // handle routing
 function onHashChange() {

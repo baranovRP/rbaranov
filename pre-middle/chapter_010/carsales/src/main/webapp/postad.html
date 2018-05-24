@@ -32,14 +32,15 @@
     </header>
     <section class="carsalespostadd">
         <div class="postad-main">
-            <form action="postad.html" class="postad-form">
+            <form enctype="multipart/form-data" method="post" @submit="onSubmit"
+                  class="postad-form">
                 <div class="form-row">
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="manufacture"
                                class="form-label">Manufacture:</label>
                         <div class="select-wrapper">
                             <select id="manufacure"
-                                    v-model="postad.car.carmodel.manufacture.id"
+                                    v-model="postad.car.carModel.manufacture.id"
                                     @change="onChange($event)"
                                     name="manufacture" id="manufacture">
                                 <option v-for="m in manufactures"
@@ -48,12 +49,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="carmodel"
                                class="form-label">Car Model:</label>
                         <div class="select-wrapper">
                             <select id="carmodel"
-                                    v-model="postad.car.carmodel.id"
+                                    v-model="postad.car.carModel.id"
                                     name="carmodel" id="carmodel">
                                 <option v-for="c in models"
                                         :value="c.id">{{ c.name }}
@@ -61,7 +62,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="category"
                                class="form-label">Category:</label>
                         <div class="select-wrapper">
@@ -74,7 +75,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                </div>
+                <div class="form-row">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="body"
                                class="form-label">Body Type:</label>
                         <div class="select-wrapper">
@@ -86,9 +89,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="fuel"
                                class="form-label">Fuel Type:</label>
                         <div class="select-wrapper">
@@ -100,7 +101,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="transmission"
                                class="form-label">Transmission Type:</label>
                         <div class="select-wrapper">
@@ -113,55 +114,76 @@
                             </select>
                         </div>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                </div>
+                <div class="form-row ">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="content"
                                class="form-label">Description:</label>
                         <span class="select-wrapper">
-                    <input type="text" id="content" name="content"
+                    <input type="text" id="content"
+                           v-model="postad.content" name="content"
                            autocomplete="off">
                 </span>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="price" class="form-label">Enter the price
                             (e.g.
                             5000)*:</label>
                         <span class="select-wrapper">
                     <input id="price" name="price"
+                           v-model="postad.price"
                            type="number" placeholder="5000" step="1" min="1"
                            autocomplete="off">
                 </span>
                     </div>
-                </div>
-                <div class="form-row ">
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="enginesize" class="form-label">Enter the
                             engine
                             size (e.g. 1.2)*:</label>
                         <span class="select-wrapper">
                     <input id="enginesize" name="enginesize"
+                           v-model="postad.car.engineSize"
                            type="number" placeholder="1.2" step="0.1" min="0.1"
                            autocomplete="off">
                 </span>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                </div>
+                <div class="form-row ">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="mileage" class="form-label">Enter the
                             mileage
                             (e.g. 65000)*:</label>
                         <span class="select-wrapper">
                     <input id="mileage" name="mileage"
-                           type="number" placeholder="6500" step="1" min="1"
+                           v-model="postad.car.mileage"
+                           type="number" placeholder="65000" step="1" min="1"
                            autocomplete="off">
                 </span>
                     </div>
-                    <div class="postad-keyword form-col-12 form-col-m-3">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
                         <label for="year" class="form-label">Enter the year
-                            (e.g.
-                            2015)*:</label>
+                            (e.g. 2015)*:</label>
                         <span class="select-wrapper">
                     <input id="year" name="year"
-                           type="number" placeholder="2015" step="1" min="1900"
+                           v-model="postad.car.year"
+                           type="number" placeholder="2008" step="1" min="1900"
                            autocomplete="off">
                 </span>
+                    </div>
+                    <div class="postad-keyword form-col-12 form-col-m-4">
+                        <label for="pictures" class="form-label">Selected file:
+                            {{ pictures[0] && pictures[0].name }}...
+                        </label>
+                        <b-form-file id="pictures" v-model="pictures"
+                                     :state="Boolean(pictures[0])"
+                                     :multiple=true
+                                     placeholder="Choose a file..."></b-form-file>
+                    </div>
+                </div>
+                <div class="form-row ">
+                    <div class="postad-keyword form-col-12 form-col-m-4">
+                        <b-button type="submit" variant="primary">Post
+                        </b-button>
                     </div>
                 </div>
             </form>

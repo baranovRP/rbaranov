@@ -13,6 +13,14 @@ public class Picture {
     public Picture() {
     }
 
+    public Picture(final Long id) {
+        this.id = id;
+    }
+
+    public Picture(final byte[] data) {
+        this.data = data;
+    }
+
     public Picture(final byte[] data, final Post post) {
         this.data = data;
         this.post = post;

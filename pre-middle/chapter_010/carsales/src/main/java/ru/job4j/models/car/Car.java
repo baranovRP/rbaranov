@@ -23,6 +23,10 @@ public class Car {
     public Car() {
     }
 
+    public Car(final Long id) {
+        this.id = id;
+    }
+
     public Car(final Body body, final Category category, final Fuel fuel,
                final CarModel carModel, final Transmission transmission,
                final Double engineSize, final Long mileage, final Integer year) {
