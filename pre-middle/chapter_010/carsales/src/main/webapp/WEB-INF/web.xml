@@ -1,7 +1,7 @@
 <web-app>
     <servlet>
         <servlet-name>ListPostsController</servlet-name>
-        <servlet-class>ru.job4j.controllers.ListPostsController</servlet-class>
+        <servlet-class>ru.job4j.controller.ListPostsController</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -10,7 +10,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>AddPostController</servlet-name>
-        <servlet-class>ru.job4j.controllers.AddPostController</servlet-class>
+        <servlet-class>ru.job4j.controller.AddPostController</servlet-class>
         <load-on-startup>0</load-on-startup>
         <multipart-config>
             <!--<location>/tmp</location>-->

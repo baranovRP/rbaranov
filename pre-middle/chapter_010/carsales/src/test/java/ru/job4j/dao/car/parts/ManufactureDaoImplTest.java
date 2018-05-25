@@ -1,7 +1,7 @@
 package ru.job4j.dao.car.parts;
 
 import org.junit.Test;
-import ru.job4j.models.car.parts.Manufacture;
+import ru.job4j.model.car.parts.Manufacture;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;

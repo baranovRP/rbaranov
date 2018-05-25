@@ -1,7 +1,7 @@
 package ru.job4j.dao;
 
 import ru.job4j.dao.car.parts.*;
-import ru.job4j.models.Metadata;
+import ru.job4j.model.Metadata;
 
 public class MetadataStore {
 

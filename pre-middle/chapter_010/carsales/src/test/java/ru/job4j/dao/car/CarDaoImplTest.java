@@ -3,8 +3,8 @@ package ru.job4j.dao.car;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.dao.car.parts.*;
-import ru.job4j.models.car.Car;
-import ru.job4j.models.car.parts.CarModel;
+import ru.job4j.model.car.Car;
+import ru.job4j.model.car.parts.CarModel;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;

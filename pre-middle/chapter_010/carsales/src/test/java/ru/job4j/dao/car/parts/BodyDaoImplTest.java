@@ -1,7 +1,7 @@
 package ru.job4j.dao.car.parts;
 
 import org.junit.Test;
-import ru.job4j.models.car.parts.Body;
+import ru.job4j.model.car.parts.Body;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;

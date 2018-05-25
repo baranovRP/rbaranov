@@ -2,7 +2,7 @@ package ru.job4j.dao;
 
 import org.junit.Test;
 import ru.job4j.dao.car.CarDaoImpl;
-import ru.job4j.models.Post;
+import ru.job4j.model.Post;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

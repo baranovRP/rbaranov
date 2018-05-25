@@ -1,7 +1,7 @@
 package ru.job4j.dao;
 
 import org.junit.Test;
-import ru.job4j.models.Role;
+import ru.job4j.model.Role;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
