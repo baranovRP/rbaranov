@@ -9,6 +9,15 @@
         <url-pattern>/list</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>PictureController</servlet-name>
+        <servlet-class>ru.job4j.controller.PictureController</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PictureController</servlet-name>
+        <url-pattern>/pic</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>AddPostController</servlet-name>
         <servlet-class>ru.job4j.controller.AddPostController</servlet-class>
         <load-on-startup>0</load-on-startup>

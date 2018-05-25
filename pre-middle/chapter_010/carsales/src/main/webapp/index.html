@@ -36,7 +36,9 @@
                     <div class="article-wrapper">
                         <div class="post-pic">
                             <div class="post-thumbnail">
-                                <img src="./assets/noimage_thumbnail.png"
+                                <img :src="post.pictures[0]
+                                    ? 'pic?post=' + post.id + '&pic=' + post.pictures[0]
+                                     : './assets/noimage_thumbnail.png'"
                                      :alt="post.car.carModel.manufacture.name">
                             </div>
                         </div>

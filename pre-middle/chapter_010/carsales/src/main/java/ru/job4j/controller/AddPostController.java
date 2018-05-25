@@ -44,11 +44,15 @@ public class AddPostController extends HttpServlet {
         Long carId = new CarDaoImpl().create(post.getCar());
         post.setCar(new Car(carId));
         List<byte[]> pics = new ArrayList<>();
-        InputStream in = null;
+
         for (Part p : req.getParts()) {
             if (!p.getName().equalsIgnoreCase("postad")) {
-                in = p.getInputStream();
-                pics.add(new byte[in.available()]);
+                byte[] pic;
+                try (InputStream in = p.getInputStream()) {
+                    pic = new byte[in.available()];
+                    in.read(pic);
+                }
+                pics.add(pic);
             }
         }
 
