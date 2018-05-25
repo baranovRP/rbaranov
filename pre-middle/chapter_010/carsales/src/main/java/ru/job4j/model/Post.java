@@ -1,5 +1,7 @@
 package ru.job4j.model;
 
+import com.google.gson.annotations.JsonAdapter;
+import ru.job4j.json.PictureListSerializer;
 import ru.job4j.model.car.Car;
 
 import java.sql.Timestamp;
@@ -20,6 +22,7 @@ public class Post {
     private Car car;
     private User user;
     private Timestamp publishDate;
+    @JsonAdapter(PictureListSerializer.class)
     private List<Picture> pictures = new CopyOnWriteArrayList<>();
 
     public Post() {
