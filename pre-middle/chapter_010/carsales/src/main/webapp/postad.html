@@ -12,188 +12,188 @@
         display: none;
     } </style>
 </head>
-<bodies>
-    <header>
-        <div>
-            <nav class="header-nav">
-                <ul class="toolbar">
-                    <li class="header-nav-postad">
-                        <a href=postad.html class="btn-header">
-                            <span class="btn-header-txt">Post an ad</span>
-                        </a>
-                    </li>
-                    <li class="header-nav-login">
-                        <a href="/login"
-                           class="header-nav-link">Login/Register</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <section class="carsalespostadd">
-        <div class="postad-main">
-            <form enctype="multipart/form-data" method="post" @submit="onSubmit"
-                  class="postad-form">
-                <div class="form-row">
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="manufacture"
-                               class="form-label">Manufacture:</label>
-                        <div class="select-wrapper">
-                            <select id="manufacure"
-                                    v-model="postad.car.carModel.manufacture.id"
-                                    @change="onChange($event)"
-                                    name="manufacture" id="manufacture">
-                                <option v-for="m in manufactures"
-                                        :value="m.id">{{ m.name }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="carmodel"
-                               class="form-label">Car Model:</label>
-                        <div class="select-wrapper">
-                            <select id="carmodel"
-                                    v-model="postad.car.carModel.id"
-                                    name="carmodel" id="carmodel">
-                                <option v-for="c in models"
-                                        :value="c.id">{{ c.name }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="category"
-                               class="form-label">Category:</label>
-                        <div class="select-wrapper">
-                            <select id="category"
-                                    v-model="postad.car.category.id"
-                                    name="categorie" id="categorie">
-                                <option v-for="c in categories"
-                                        :value="c.id">{{ c.description }}
-                                </option>
-                            </select>
-                        </div>
+<body>
+<header>
+    <div>
+        <nav class="header-nav">
+            <ul class="toolbar">
+                <li class="header-nav-postad">
+                    <a href=postad.html class="btn-header">
+                        <span class="btn-header-txt">Post an ad</span>
+                    </a>
+                </li>
+                <li class="header-nav-login">
+                    <a href="/login"
+                       class="header-nav-link">Login/Register</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<section class="carsalespostadd">
+    <div class="postad-main">
+        <form enctype="multipart/form-data" action="postad" method="post"
+              class="postad-form" name="newpostad">
+            <div class="form-row">
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="manufacture"
+                           class="form-label">Manufacture:</label>
+                    <div class="select-wrapper">
+                        <select id="manufacure"
+                                v-model="postad.car.carModel.manufacture.id"
+                                @change="onChange($event)"
+                                name="manufacture" id="manufacture">
+                            <option v-for="m in manufactures"
+                                    :value="m.id">{{ m.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="body"
-                               class="form-label">Body Type:</label>
-                        <div class="select-wrapper">
-                            <select id="body" v-model="postad.car.body.id"
-                                    name="body" id="body">
-                                <option v-for="b in bodies"
-                                        :value="b.id">{{ b.description }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="fuel"
-                               class="form-label">Fuel Type:</label>
-                        <div class="select-wrapper">
-                            <select id="fuel" v-model="postad.car.fuel.id"
-                                    name="fuel" id="fuel">
-                                <option v-for="f in fuels"
-                                        :value="f.id">{{ f.description }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="transmission"
-                               class="form-label">Transmission Type:</label>
-                        <div class="select-wrapper">
-                            <select id="transmission"
-                                    v-model="postad.car.transmission.id"
-                                    name="transmission" id="transmission">
-                                <option v-for="t in transmissions"
-                                        :value="t.id">{{ t.description}}
-                                </option>
-                            </select>
-                        </div>
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="carModel"
+                           class="form-label">Car Model:</label>
+                    <div class="select-wrapper">
+                        <select v-model="postad.car.carModel.id"
+                                name="carModel" id="carModel">
+                            <option v-for="c in models"
+                                    :value="c.id">{{ c.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
-                <div class="form-row ">
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="content"
-                               class="form-label">Description:</label>
-                        <span class="select-wrapper">
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="category"
+                           class="form-label">Category:</label>
+                    <div class="select-wrapper">
+                        <select id="category"
+                                v-model="postad.car.category.id"
+                                name="category" id="category">
+                            <option v-for="c in categories"
+                                    :value="c.id">{{ c.description }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="body"
+                           class="form-label">Body Type:</label>
+                    <div class="select-wrapper">
+                        <select id="body" v-model="postad.car.body.id"
+                                name="body" id="body">
+                            <option v-for="b in bodies"
+                                    :value="b.id">{{ b.description }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="fuel"
+                           class="form-label">Fuel Type:</label>
+                    <div class="select-wrapper">
+                        <select id="fuel" v-model="postad.car.fuel.id"
+                                name="fuel" id="fuel">
+                            <option v-for="f in fuels"
+                                    :value="f.id">{{ f.description }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="transmission"
+                           class="form-label">Transmission Type:</label>
+                    <div class="select-wrapper">
+                        <select id="transmission"
+                                v-model="postad.car.transmission.id"
+                                name="transmission" id="transmission">
+                            <option v-for="t in transmissions"
+                                    :value="t.id">{{ t.description}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row ">
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="content"
+                           class="form-label">Description:</label>
+                    <span class="select-wrapper">
                     <input type="text" id="content"
                            v-model="postad.content" name="content"
                            autocomplete="off">
                 </span>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="price" class="form-label">Enter the price
-                            (e.g.
-                            5000)*:</label>
-                        <span class="select-wrapper">
+                </div>
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="price" class="form-label">Enter the price
+                        (e.g.
+                        5000)*:</label>
+                    <span class="select-wrapper">
                     <input id="price" name="price"
                            v-model="postad.price"
                            type="number" placeholder="5000" step="1" min="1"
                            autocomplete="off">
                 </span>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="enginesize" class="form-label">Enter the
-                            engine
-                            size (e.g. 1.2)*:</label>
-                        <span class="select-wrapper">
-                    <input id="enginesize" name="enginesize"
+                </div>
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="engineSize" class="form-label">Enter the
+                        engine
+                        size (e.g. 1.2)*:</label>
+                    <span class="select-wrapper">
+                    <input id="engineSize" name="engineSize"
                            v-model="postad.car.engineSize"
                            type="number" placeholder="1.2" step="0.1" min="0.1"
                            autocomplete="off">
                 </span>
-                    </div>
                 </div>
-                <div class="form-row ">
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="mileage" class="form-label">Enter the
-                            mileage
-                            (e.g. 65000)*:</label>
-                        <span class="select-wrapper">
+            </div>
+            <div class="form-row ">
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="mileage" class="form-label">Enter the
+                        mileage
+                        (e.g. 65000)*:</label>
+                    <span class="select-wrapper">
                     <input id="mileage" name="mileage"
                            v-model="postad.car.mileage"
                            type="number" placeholder="65000" step="1" min="1"
                            autocomplete="off">
                 </span>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="year" class="form-label">Enter the year
-                            (e.g. 2015)*:</label>
-                        <span class="select-wrapper">
+                </div>
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="year" class="form-label">Enter the year
+                        (e.g. 2015)*:</label>
+                    <span class="select-wrapper">
                     <input id="year" name="year"
                            v-model="postad.car.year"
                            type="number" placeholder="2008" step="1" min="1900"
                            autocomplete="off">
                 </span>
-                    </div>
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <label for="pictures" class="form-label">Selected file:
-                            {{ pictures[0] && pictures[0].name }}...
-                        </label>
-                        <b-form-file id="pictures" v-model="pictures"
-                                     :state="Boolean(pictures[0])"
-                                     :multiple=true
-                                     placeholder="Choose a file..."></b-form-file>
-                    </div>
                 </div>
-                <div class="form-row ">
-                    <div class="postad-keyword form-col-12 form-col-m-4">
-                        <b-button type="submit" variant="primary">Post
-                        </b-button>
-                    </div>
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <label for="pictures" class="form-label">Selected file:
+                        {{ pictures[0] && pictures[0].name }}...
+                    </label>
+                    <b-form-file id="pictures" v-model="pictures"
+                                 :state="Boolean(pictures[0])"
+                                 :multiple=true
+                                 name="pictures"
+                                 placeholder="Choose a file..."></b-form-file>
                 </div>
-            </form>
-        </div>
-    </section>
-    <script src="node_modules/vue/dist/vue.js"></script>
-    <script
-        src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
-    <script
-        src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-    <script async src="js/postad.js"></script>
-</bodies>
+            </div>
+            <div class="form-row ">
+                <div class="postad-keyword form-col-12 form-col-m-4">
+                    <b-button type="submit" variant="primary">Post
+                    </b-button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script
+    src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+<script
+    src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<script async src="js/postad.js"></script>
+</body>
 </html>
