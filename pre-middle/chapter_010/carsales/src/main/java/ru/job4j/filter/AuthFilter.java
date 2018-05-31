@@ -14,14 +14,13 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(final ServletRequest req, final ServletResponse resp, final FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-        if (request.getRequestURI().contains("/signin")) {
+        if (request.getRequestURI().contains("/login")) {
             chain.doFilter(req, resp);
         } else {
             HttpSession session = request.getSession();
             synchronized (session) {
                 if (session.getAttribute("email") == null) {
-                    ((HttpServletResponse) resp).sendRedirect(
-                        String.format("%s/signin", request.getContextPath()));
+                    ((HttpServletResponse) resp).sendRedirect("/WEB-INF/view/LoginView.jsp");
                     return;
                 }
             }

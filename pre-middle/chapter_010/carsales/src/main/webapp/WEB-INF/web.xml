@@ -1,4 +1,32 @@
 <web-app>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.filter.AuthFilter</filter-class>
+        <load-on-startup>0</load-on-startup>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/postad</url-pattern>
+        <url-pattern>/metadata</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>ru.job4j.controller.LoginController</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>ru.job4j.controller.LogoutController</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ListPostsController</servlet-name>
         <servlet-class>ru.job4j.controller.ListPostsController</servlet-class>
@@ -31,5 +59,14 @@
     <servlet-mapping>
         <servlet-name>AddPostController</servlet-name>
         <url-pattern>/postad</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>MetadataController</servlet-name>
+        <servlet-class>ru.job4j.controller.MetadataController</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MetadataController</servlet-name>
+        <url-pattern>/metadata</url-pattern>
     </servlet-mapping>
 </web-app>

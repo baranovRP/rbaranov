@@ -1,11 +1,8 @@
 package ru.job4j.controller;
 
-import com.google.gson.Gson;
-import ru.job4j.dao.MetadataStore;
 import ru.job4j.dao.PictureDaoImpl;
 import ru.job4j.dao.PostDaoImpl;
 import ru.job4j.dao.car.CarDaoImpl;
-import ru.job4j.model.Metadata;
 import ru.job4j.model.Picture;
 import ru.job4j.model.Post;
 import ru.job4j.model.User;
@@ -19,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,11 +27,7 @@ public class AddPostController extends HttpServlet {
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        Metadata data = new MetadataStore().getMetadata();
-        resp.setContentType("text/json");
-        PrintWriter wr = new PrintWriter(resp.getOutputStream());
-        wr.append(new Gson().toJson(data));
-        wr.flush();
+        req.getRequestDispatcher("/postad.html").forward(req, resp);
     }
 
     @Override

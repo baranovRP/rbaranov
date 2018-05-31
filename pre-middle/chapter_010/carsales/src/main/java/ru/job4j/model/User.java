@@ -83,6 +83,10 @@ public class User {
         return this;
     }
 
+    public boolean isEmpty() {
+        return this.id == null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

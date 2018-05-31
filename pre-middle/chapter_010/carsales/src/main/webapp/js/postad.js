@@ -2,7 +2,7 @@
 
 var postStorage = {
     fetch(that) {
-        fetch('postad').then(function (response) {
+        fetch('metadata').then(function (response) {
             return response.json()
         }).then(function (result) {
             that.manufactures = result.manufactures || []
