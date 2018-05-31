@@ -52,6 +52,6 @@
     </parent>
     <modules>
         <module>todos</module>
-        <module>carsales</module>
+        <module>salesplatform</module>
     </modules>
 </project>
