@@ -24,16 +24,9 @@ public interface AbstractDao {
     }
 
     default void modifyTx(final Consumer<Session> command) {
-        final Session session = HibernateUtil.getSessionFactory().openSession();
-        final Transaction tx = session.beginTransaction();
-        try {
+        this.fetchTx(session -> {
             command.accept(session);
-        } catch (final Exception e) {
-            session.getTransaction().rollback();
-            throw e;
-        } finally {
-            tx.commit();
-            session.close();
-        }
+            return null;
+        });
     }
 }
