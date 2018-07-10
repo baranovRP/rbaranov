@@ -19,13 +19,38 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PostRepository implements AbstractDao {
 
-    public List<Picture> findByPostId(final Long postId) {
+    public List<Picture> findPicsByPostId(final Long postId) {
         Post post = new PostDaoImpl().findOne(postId);
         return fetchTx(session -> {
-            Query query = session.createQuery("from Picture where post=:post");
+            Query query = session.createQuery("FROM Picture WHERE post=:post");
             query.setParameter("post", post);
             return (List<Picture>) Optional.ofNullable(query.list())
                 .orElse(new CopyOnWriteArrayList<>());
+        });
+    }
+
+    public List<Post> findWithPics() {
+        return fetchTx(session ->
+            session.createQuery("SELECT p FROM Post p "
+                + "LEFT JOIN p.pictures pic "
+                + "WHERE pic.id IS NOT NULL").list());
+    }
+
+    public List<Post> findTodaysPosts() {
+        return fetchTx(session ->
+            session.createQuery("FROM Post "
+                + "WHERE publishDate >= CURRENT_DATE").list());
+    }
+
+    public List<Post> findByCarManufacture(final String manufacture) {
+        return fetchTx(session -> {
+            Query query = session.createQuery("SELECT p from Post p "
+                + "join p.car c "
+                + "join c.carModel cm "
+                + "join cm.manufacture m "
+                + "where m.name = :manufacture");
+            query.setParameter("manufacture", manufacture);
+            return query.list();
         });
     }
 
@@ -42,7 +67,7 @@ public class PostRepository implements AbstractDao {
     }
 
     public void editPostAd(final User user, final Post post) throws AuthenticationException {
-        post.setPictures(new PostRepository().findByPostId(post.getId()));
+        post.setPictures(new PostRepository().findPicsByPostId(post.getId()));
         if (!user.getId().equals(post.getUser().getId())) {
             throw new AuthenticationException(
                 String.format("User: %s attempts to edit not his own post.", user.getEmail()));

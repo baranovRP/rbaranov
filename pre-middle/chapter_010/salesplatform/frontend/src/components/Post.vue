@@ -18,6 +18,7 @@
             <h2 class="post-title">{{
               post.car.carModel.manufacture.name }} {{
               post.car.carModel.name }}</h2>
+            <sup>{{ post.publishDate }}</sup>
             <p class="post-description">{{ post.content }}</p>
             <ul class="post-attributes">
               <li>
@@ -218,7 +219,7 @@ export default {
   .ribbon-featured .ribbon {
     background-color: #fff;
     color: #e57373;
-    box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, .2);
     text-transform: uppercase;
     display: block;
     text-align: center;

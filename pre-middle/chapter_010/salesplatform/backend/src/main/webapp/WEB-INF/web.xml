@@ -47,6 +47,15 @@
         <url-pattern>/list</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>FilterPostsController</servlet-name>
+        <servlet-class>ru.job4j.controller.FilterPostsController</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FilterPostsController</servlet-name>
+        <url-pattern>/filter</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>PictureController</servlet-name>
         <servlet-class>ru.job4j.controller.PictureController</servlet-class>
         <load-on-startup>0</load-on-startup>

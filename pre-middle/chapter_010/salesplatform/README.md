@@ -32,7 +32,7 @@
 ![alt text](backend/ext_src/filterCarManufacture.png)
 
 ## Filter `with pictures` 
-![alt text](backend/ext_src/filterPics.png)
+![alt text](backend/ext_src/filterWithPics.png)
 
 ## Filter `published today`
 ![alt text](backend/ext_src/filterToday.png)

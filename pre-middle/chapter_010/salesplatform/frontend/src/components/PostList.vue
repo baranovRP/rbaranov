@@ -9,7 +9,7 @@
     </b-row>
     <b-row class="main" v-show="posts && posts.length" v-cloak>
       <b-list-group class="post-list">
-        <job4j-post v-for="post in filteredPosts" :key="post.id"
+        <job4j-post v-for="post in posts" :key="post.id"
                     :post="post"></job4j-post>
       </b-list-group>
     </b-row>
@@ -53,37 +53,32 @@ export default {
       })
       .catch(error => console.log(error))
   },
-  computed: {
-    filteredPosts: function () {
-      let posts
-      const visibility = this.visibility.toLowerCase()
-
-      switch (visibility) {
-        case POSTED_TODAY.toLowerCase():
-          posts = this.posts.filter(p => {
-            const pDate = new Date(p.publishDate).toDateString()
-            const today = new Date().toDateString()
-            return pDate === today
-          })
-          break
-        case POSTS_WITH_PICS.toLowerCase():
-          posts = this.posts.filter(p => p.pictures.length !== 0)
-          break
-        case ALL.toLowerCase():
-          posts = this.posts
-          break
-        default:
-          posts = this.posts.filter(p =>
-            visibility === p.car.carModel.manufacture.name.toLowerCase())
-      }
-      console.log(posts)
-      return posts || []
-    }
-  },
   methods: {
     onChange (value) {
       this.visibility = value
       console.log(`visibility: ${this.visibility}`)
+      let urlPart
+      switch (value.toLowerCase()) {
+        case POSTED_TODAY.toLowerCase():
+          urlPart = '/filter?publish_date=today'
+          break
+        case POSTS_WITH_PICS.toLowerCase():
+          urlPart = '/filter?with_pics=yes'
+          break
+        case ALL.toLowerCase():
+          urlPart = '/list'
+          break
+        default:
+          urlPart = `/filter?manufacture=${value}`
+      }
+      axios.get(urlPart)
+        .then(res => {
+          console.log(res)
+          const [...posts] = res.data
+          this.posts = posts
+          console.log(posts)
+        })
+        .catch(error => console.log(error))
     }
   }
 }

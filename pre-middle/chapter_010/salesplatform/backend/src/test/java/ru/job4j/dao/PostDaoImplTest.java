@@ -1,6 +1,7 @@
 package ru.job4j.dao;
 
 import org.junit.Test;
+import ru.job4j.PostRepository;
 import ru.job4j.dao.car.CarDaoImpl;
 import ru.job4j.model.Post;
 
@@ -8,8 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class PostDaoImplTest {
 
@@ -22,6 +22,21 @@ public class PostDaoImplTest {
     @Test
     public void findAll() {
         assertThat(new PostDaoImpl().findAll().size(), greaterThanOrEqualTo(1));
+    }
+
+    @Test
+    public void findWithoutPics() {
+        assertThat(new PostRepository().findWithPics().size(), greaterThan(3));
+    }
+
+    @Test
+    public void findTodaysPosts() {
+        assertThat(new PostRepository().findTodaysPosts().size(), equalTo(2));
+    }
+
+    @Test
+    public void findByCarManufacture() {
+        assertThat(new PostRepository().findByCarManufacture("BMW").size(), equalTo(3));
     }
 
     @Test
