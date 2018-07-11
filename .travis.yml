@@ -21,4 +21,3 @@ services:
 before_script:
   - psql -c 'create database users;' -U postgres
   - psql -c 'create database hibernate_module_test;' -U postgres
-  - psql -c 'create database sales_car_platform_test;' -U postgres

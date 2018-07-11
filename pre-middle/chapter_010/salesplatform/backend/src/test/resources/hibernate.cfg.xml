@@ -4,22 +4,21 @@
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">
-            org.postgresql.Driver
+        <property name="connection.driver_class">
+            org.hsqldb.jdbcDriver
         </property>
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password"/>
-        <!--<property name="hibernate.connection.url">-->
-            <!--jdbc:postgresql://localhost:5432/sales_car_platform_test-->
-        <!--</property>-->
-        <property name="hibernate.connection.url">
-            jdbc:postgresql://localhost:5432/sales_car_platform
+        <property name="connection.username">sa</property>
+        <property name="connection.password"/>
+        <property name="connection.url">
+            jdbc:hsqldb:mem:sales_car_platform_test;sql.enforce_size=false
         </property>
-        <property name="hibernate.dialect">
-            org.hibernate.dialect.PostgreSQL94Dialect
-        </property>
+        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
         <property name="show_sql">true</property>
-        <property name="format_sql">true</property>
+        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.import_files">
+            liquibase/sql/20180513-1-init.sql,
+            liquibase/sql/20180513-2-insert-dictionaries.sql
+        </property>
         <mapping resource="ru/job4j/model/car/parts/Body.hbm.xml"/>
         <mapping resource="ru/job4j/model/car/parts/Category.hbm.xml"/>
         <mapping resource="ru/job4j/model/car/parts/Fuel.hbm.xml"/>
