@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
     <class name="ru.job4j.model.Picture" table="PICTURES" dynamic-update="true">
-        <id name="id" column="id">
+        <id name="id" column="ID">
             <generator class="identity"/>
         </id>
         <property name="data" column="DATA"/>

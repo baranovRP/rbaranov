@@ -24,3 +24,15 @@
 
 ## Login Under another user 
 ![alt text](backend/ext_src/loginOtherUser.png)
+
+## Filter `all`
+![alt text](backend/ext_src/filterAll.png)
+
+## Filter `car manufacture` 
+![alt text](backend/ext_src/filterCarManufacture.png)
+
+## Filter `with pictures` 
+![alt text](backend/ext_src/filterWithPics.png)
+
+## Filter `published today`
+![alt text](backend/ext_src/filterToday.png)
