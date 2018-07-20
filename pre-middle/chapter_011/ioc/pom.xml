@@ -15,8 +15,7 @@
     </parent>
 
     <modules>
-        <module>xml-based</module>
-        <module>annotation-based</module>
+        <module>storage</module>
     </modules>
 
 </project>
