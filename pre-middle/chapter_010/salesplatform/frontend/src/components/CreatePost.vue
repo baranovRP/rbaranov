@@ -256,7 +256,7 @@ export default {
       event.preventDefault()
       const formdata = new FormData()
       this.pictures.forEach(function (value, idx) {
-        formdata.append('pic' + idx, value, value.name)
+        formdata.append('pic', value, value.name)
       })
       formdata.append('postad', JSON.stringify(this.postad))
       axios.post('/postad', formdata,

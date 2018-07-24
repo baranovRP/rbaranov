@@ -6,12 +6,14 @@ import ru.job4j.model.User;
 
 import javax.security.sasl.AuthenticationException;
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
  * Authorization filter
  */
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/postad", "/editad"})
 public class AuthFilter implements Filter {
 
     @Override

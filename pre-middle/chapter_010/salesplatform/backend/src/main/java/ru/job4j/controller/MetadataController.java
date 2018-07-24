@@ -1,24 +1,19 @@
 package ru.job4j.controller;
 
-import com.google.gson.Gson;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.job4j.dao.MetadataStore;
 import ru.job4j.model.Metadata;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+/**
+ * Metadata controller.
+ * Return metadata for add post page. (e.g. dropdown values etc.)
+ */
+@RestController
+public class MetadataController {
 
-public class MetadataController extends HttpServlet {
-
-    @Override
-    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        Metadata data = new MetadataStore().getMetadata();
-        resp.setContentType("text/json");
-        PrintWriter wr = new PrintWriter(resp.getOutputStream());
-        wr.append(new Gson().toJson(data));
-        wr.flush();
+    @GetMapping(value = "/metadata", produces = "application/json;charset=UTF-8")
+    public Metadata getMetadata() {
+        return new MetadataStore().getMetadata();
     }
 }
