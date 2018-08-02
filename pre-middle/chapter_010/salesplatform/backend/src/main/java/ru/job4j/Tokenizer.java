@@ -7,6 +7,7 @@ public class Tokenizer {
 
     /**
      * Code / encode token string
+     *
      * @param input String
      * @return token
      */

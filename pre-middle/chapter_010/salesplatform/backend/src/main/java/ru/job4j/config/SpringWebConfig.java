@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @EnableWebMvc
 @Configuration
-@ComponentScan("ru.job4j.controller")
+@ComponentScan({"ru.job4j.controller", "ru.job4j.filter"})
 public class SpringWebConfig implements WebMvcConfigurer {
 
     @Override

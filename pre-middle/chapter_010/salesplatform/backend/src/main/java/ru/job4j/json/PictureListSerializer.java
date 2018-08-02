@@ -9,6 +9,10 @@ import ru.job4j.model.Picture;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * Picture List serializer.
+ * Transform, add picture to Post JSON
+ */
 public class PictureListSerializer implements JsonSerializer<List<Picture>> {
 
     @Override

@@ -3,6 +3,10 @@ package ru.job4j.json;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+/**
+ * Auth JSON.
+ * Represent the authorization object (token, local id, expiration time etc.)
+ */
 public class AuthJson {
 
     private String idToken;

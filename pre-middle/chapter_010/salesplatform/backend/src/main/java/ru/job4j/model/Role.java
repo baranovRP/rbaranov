@@ -1,14 +1,20 @@
 package ru.job4j.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Class represent Role.
  */
+@Entity
 public class Role {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String type;
 
     public Role() {

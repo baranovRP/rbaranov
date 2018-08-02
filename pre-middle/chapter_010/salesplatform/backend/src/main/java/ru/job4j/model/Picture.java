@@ -1,13 +1,22 @@
 package ru.job4j.model;
 
+import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@Entity
+@Table(name = "pictures")
 public class Picture {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private byte[] data;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
     private Post post;
 
     public Picture() {
@@ -45,17 +54,17 @@ public class Picture {
         return data;
     }
 
+    public Picture setData(final byte[] data) {
+        this.data = data;
+        return this;
+    }
+
     public Post getPost() {
         return post;
     }
 
     public Picture setPost(final Post post) {
         this.post = post;
-        return this;
-    }
-
-    public Picture setData(final byte[] data) {
-        this.data = data;
         return this;
     }
 

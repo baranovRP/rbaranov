@@ -1,17 +1,27 @@
 package ru.job4j.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Represent User class.
  */
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
     private String passw;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private Role role;
+
     private String phone;
 
     public User() {

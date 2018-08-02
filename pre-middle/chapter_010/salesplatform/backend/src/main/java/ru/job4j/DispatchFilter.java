@@ -1,26 +1,34 @@
 package ru.job4j;
 
+import org.springframework.stereotype.Component;
 import ru.job4j.model.Post;
+import ru.job4j.service.PostService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+@Component
 public class DispatchFilter {
 
     private final Map<Filter, BiFunction<Filter, String, List<Post>>> dispatch = new HashMap<>();
+    private PostService service;
+
+    public DispatchFilter(final PostService service) {
+        this.service = service;
+    }
 
     public BiFunction<Filter, String, List<Post>> findTodaysPosts() {
-        return (filter, param) -> new PostRepository().findTodaysPosts();
+        return (filter, param) -> service.findTodaysPosts();
     }
 
     public BiFunction<Filter, String, List<Post>> findWithPics() {
-        return (filter, param) -> new PostRepository().findWithPics();
+        return (filter, param) -> service.findWithPics();
     }
 
     public BiFunction<Filter, String, List<Post>> findByCarManufacture() {
-        return (filter, param) -> new PostRepository().findByCarManufacture(param);
+        return (filter, param) -> service.findByCarManufacture(param);
     }
 
     public DispatchFilter init() {

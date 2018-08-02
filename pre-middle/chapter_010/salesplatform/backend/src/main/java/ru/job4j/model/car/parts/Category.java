@@ -1,15 +1,22 @@
 package ru.job4j.model.car.parts;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Class represent Category.
  */
+@Entity
 public class Category {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String type;
+
     private String description;
 
     public Category() {
@@ -21,7 +28,7 @@ public class Category {
     }
 
     public Category(final Long id, final String type,
-                        final String description) {
+                    final String description) {
         this.id = id;
         this.type = type;
         this.description = description;

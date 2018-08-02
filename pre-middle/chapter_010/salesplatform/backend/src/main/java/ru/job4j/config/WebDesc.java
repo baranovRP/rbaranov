@@ -1,6 +1,11 @@
 package ru.job4j.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 /**
  * Web descriptor.
@@ -9,7 +14,7 @@ public class WebDesc extends AbstractAnnotationConfigDispatcherServletInitialize
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{SpringRootConfig.class};
+        return new Class[]{SpringRootConfig.class, SpringRepositoryConfig.class};
     }
 
     @Override
@@ -22,15 +27,15 @@ public class WebDesc extends AbstractAnnotationConfigDispatcherServletInitialize
         return new String[]{"/*"};
     }
 
-//    @Override
-//    protected Filter[] getServletFilters() {
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        characterEncodingFilter.setForceEncoding(true);
-//        return new Filter[]{
-//            new HiddenHttpMethodFilter(),
-//            new AuthFilter(),
-//            characterEncodingFilter
-//        };
-//    }
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return new Filter[]{
+            new HiddenHttpMethodFilter(),
+            characterEncodingFilter,
+            new DelegatingFilterProxy("authFilter")
+        };
+    }
 }

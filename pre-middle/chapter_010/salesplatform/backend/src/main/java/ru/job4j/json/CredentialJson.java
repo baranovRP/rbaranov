@@ -3,6 +3,10 @@ package ru.job4j.json;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+/**
+ * Credential JSON.
+ * Credential JSON includes email, password
+ */
 public class CredentialJson {
 
     private String email;

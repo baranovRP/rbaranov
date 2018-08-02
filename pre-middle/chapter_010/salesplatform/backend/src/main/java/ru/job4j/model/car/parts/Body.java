@@ -1,15 +1,22 @@
 package ru.job4j.model.car.parts;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Class represent Body.
  */
+@Entity
 public class Body {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String type;
+
     private String description;
 
     public Body() {
@@ -21,7 +28,7 @@ public class Body {
     }
 
     public Body(final Long id, final String type,
-                        final String description) {
+                final String description) {
         this.id = id;
         this.type = type;
         this.description = description;

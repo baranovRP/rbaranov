@@ -1,14 +1,22 @@
 package ru.job4j.model.car.parts;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Class represent Manufacture.
  */
+@Entity
 public class Manufacture {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     public Manufacture() {

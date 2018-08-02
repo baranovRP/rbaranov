@@ -1,15 +1,24 @@
 package ru.job4j.model.car.parts;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Class represent CarModel.
  */
+@Entity
+@Table(name = "car_model")
 public class CarModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "manufacture_id")
     private Manufacture manufacture;
 
     public CarModel() {

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * Represent User class.
+ * User JSON.
  */
 public class UserJson {
 

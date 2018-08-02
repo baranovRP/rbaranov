@@ -4,6 +4,7 @@ import com.google.gson.annotations.JsonAdapter;
 import ru.job4j.json.PictureListSerializer;
 import ru.job4j.model.car.Car;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -13,16 +14,34 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Represent Post class.
  */
+@Entity
+@Table(name = "posts")
 public class Post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String content;
     private Double price;
+    @Column(name = "is_active")
     private Boolean isActive;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_id")
     private Car car;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "publish_date")
     private Timestamp publishDate;
+
     @JsonAdapter(PictureListSerializer.class)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id")
+    @Column(nullable = false)
     private List<Picture> pictures = new CopyOnWriteArrayList<>();
 
     public Post() {

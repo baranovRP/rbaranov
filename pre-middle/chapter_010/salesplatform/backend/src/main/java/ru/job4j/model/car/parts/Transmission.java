@@ -1,15 +1,22 @@
 package ru.job4j.model.car.parts;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Class represent Transmission.
  */
+@Entity
 public class Transmission {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String type;
+
     private String description;
 
     public Transmission() {

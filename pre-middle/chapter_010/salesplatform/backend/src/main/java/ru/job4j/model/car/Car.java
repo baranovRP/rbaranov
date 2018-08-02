@@ -2,20 +2,42 @@ package ru.job4j.model.car;
 
 import ru.job4j.model.car.parts.*;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * Class Car carModel.
  */
+@Entity
+@Table(name = "cars")
 public class Car {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "body_id")
     private Body body;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fuel_id")
     private Fuel fuel;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "model_id")
     private CarModel carModel;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "transmission_id")
     private Transmission transmission;
+
+    @Column(name = "engine_size")
     private Double engineSize;
     private Long mileage;
     private Integer year;

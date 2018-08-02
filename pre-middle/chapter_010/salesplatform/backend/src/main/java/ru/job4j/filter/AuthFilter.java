@@ -1,39 +1,49 @@
 package ru.job4j.filter;
 
-import ru.job4j.Tokenizer;
-import ru.job4j.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.job4j.model.User;
+import ru.job4j.service.TokenizerService;
+import ru.job4j.service.UserService;
 
-import javax.security.sasl.AuthenticationException;
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Authorization filter
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/postad", "/editad"})
+@Component("authFilter")
 public class AuthFilter implements Filter {
+
+    @Autowired
+    private TokenizerService tokenizerService;
+
+    @Autowired
+    private UserService userService;
+
+    private List<String> urlPatterns = Arrays.asList("/postad", "/editad");
 
     @Override
     public void doFilter(final ServletRequest req, final ServletResponse resp, final FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         String auth = request.getHeader("Authorization");
-        if (request.getRequestURI().contains("/login")) {
-            chain.doFilter(req, resp);
-        } else {
-            if (auth != null) {
-                String email = new Tokenizer().codeEncodeToken(auth);
-                User user = new UserRepository().findByEmail(email);
+        for (String urlPattern : urlPatterns) {
+            if (request.getRequestURI().contains(urlPattern) && auth != null) {
+                String email = tokenizerService.codeEncodeToken(auth);
+                User user = userService.findByEmail(email);
                 if (user.isEmpty()) {
-                    throw new AuthenticationException(
-                        String.format("User: %s is unknown.", user.getEmail()));
+//                    throw new AuthenticationException(
+//                        String.format("User: %s is unknown.", user.getEmail()));
+                    System.out.println(String.format("User: %s is unknown.", user.getEmail()));
                 }
                 req.setAttribute("user", user);
-                chain.doFilter(req, resp);
+                break;
             }
         }
+        chain.doFilter(req, resp);
     }
 
     @Override
