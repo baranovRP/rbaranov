@@ -1,5 +1,7 @@
 package ru.job4j.json;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -10,6 +12,7 @@ import java.util.StringJoiner;
 public class CredentialJson {
 
     private String email;
+    @SerializedName("passw")
     private String password;
 
     public CredentialJson() {

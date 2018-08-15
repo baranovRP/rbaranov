@@ -72,5 +72,5 @@ INSERT INTO car_model (name, manufacture_id) VALUES ('Azure', 9);
 INSERT INTO car_model (name, manufacture_id) VALUES ('Mark VI', 9);
 
 -- insert role dictionary
-INSERT INTO role (type) VALUES ('USER');
-INSERT INTO role (type) VALUES ('GUEST');
+INSERT INTO role (type) VALUES ('ROLE_USER');
+INSERT INTO role (type) VALUES ('ROLE_GUEST');

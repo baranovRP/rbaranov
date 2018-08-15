@@ -1,7 +1,6 @@
 package ru.job4j.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -34,8 +33,7 @@ public class WebDesc extends AbstractAnnotationConfigDispatcherServletInitialize
         characterEncodingFilter.setForceEncoding(true);
         return new Filter[]{
             new HiddenHttpMethodFilter(),
-            characterEncodingFilter,
-            new DelegatingFilterProxy("authFilter")
+            characterEncodingFilter
         };
     }
 }

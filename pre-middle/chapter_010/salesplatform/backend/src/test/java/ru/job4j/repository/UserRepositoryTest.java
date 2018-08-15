@@ -30,7 +30,7 @@ public class UserRepositoryTest extends BaseTest {
     @Before
     public void setUp() {
         role = roleRepo.findById(1L)
-            .orElse(roleRepo.save(new Role(1L, "USER")));
+            .orElse(roleRepo.save(new Role(1L, "ROLE_USER")));
         user = new User().setId(1L)
             .setEmail("ivanov@email.com")
             .setPassw("1234")
@@ -100,14 +100,14 @@ public class UserRepositoryTest extends BaseTest {
 //    public void update() {
 //        User newUser = new User().setEmail("miller@email.com")
 //            .setPassw("4321")
-//            .setRole(new Role(1L, "USER"))
+//            .setRole(new Role(1L, "ROLE_USER"))
 //            .setPhone("222-22-22");
 //        Long id = new UserDaoImpl().create(newUser);
 //        newUser.setId(id);
 //        new UserDaoImpl().update(newUser.setEmail("moreau@email.com"));
 //        User savedUser = new UserDaoImpl().findOne(id);
 //        assertThat(savedUser, is(newUser));
-//        assertThat(savedUser.getRole().getType(), is("USER"));
+//        assertThat(savedUser.getRole().getType(), is("ROLE_USER"));
 //        assertThat(savedUser.getEmail(), is("moreau@email.com"));
 //    }
 //
@@ -115,12 +115,12 @@ public class UserRepositoryTest extends BaseTest {
 //    public void updateAll() {
 //        User newUser1 = new User().setEmail("fernandez@email.com")
 //            .setPassw("4321")
-//            .setRole(new Role(1L, "USER"))
+//            .setRole(new Role(1L, "ROLE_USER"))
 //            .setPhone("222-22-22");
 //        newUser1.setId(new UserDaoImpl().create(newUser1));
 //        User newUser2 = new User().setEmail("lopez@email.com")
 //            .setPassw("4321")
-//            .setRole(new Role(1L, "USER"))
+//            .setRole(new Role(1L, "ROLE_USER"))
 //            .setPhone("222-22-22");
 //        newUser2.setId(new UserDaoImpl().create(newUser2));
 //        List<User> changedUsers = Arrays.asList(newUser1.setEmail("rodriguez@email.com"),
@@ -131,7 +131,7 @@ public class UserRepositoryTest extends BaseTest {
 //        assertThat(new UserDaoImpl().findOne(newUser2.getId()).getEmail(),
 //            is("lopez@email.com"));
 //        assertThat(new UserDaoImpl().findOne(newUser1.getId()).getRole().getType(),
-//            is("USER"));
+//            is("ROLE_USER"));
 //        assertThat(new UserDaoImpl().findOne(newUser2.getId()).getRole().getType(),
 //            is("GUEST"));
 //    }
@@ -140,7 +140,7 @@ public class UserRepositoryTest extends BaseTest {
 //    public void delete() {
 //        User newUser = new User().setEmail("kowalski@email.com")
 //            .setPassw("4321")
-//            .setRole(new Role(1L, "USER"))
+//            .setRole(new Role(1L, "ROLE_USER"))
 //            .setPhone("333-33-33");
 //        Long id = new UserDaoImpl().create(newUser);
 //        newUser.setId(id);
@@ -153,7 +153,7 @@ public class UserRepositoryTest extends BaseTest {
 //    public void deleteById() {
 //        User newUser = new User().setEmail("ruzicka@email.com")
 //            .setPassw("4321")
-//            .setRole(new Role(1L, "USER"))
+//            .setRole(new Role(1L, "ROLE_USER"))
 //            .setPhone("333-33-33");
 //        Long id = new UserDaoImpl().create(newUser);
 //        newUser.setId(id);

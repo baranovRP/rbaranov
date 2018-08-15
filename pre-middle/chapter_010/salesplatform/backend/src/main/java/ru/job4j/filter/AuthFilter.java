@@ -1,58 +1,36 @@
 package ru.job4j.filter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.job4j.model.User;
-import ru.job4j.service.TokenizerService;
-import ru.job4j.service.UserService;
+import com.google.gson.Gson;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.job4j.json.CredentialJson;
 
-import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
- * Authorization filter
+ * Filter requests to find credentials.
  */
-@Component("authFilter")
-public class AuthFilter implements Filter {
-
-    @Autowired
-    private TokenizerService tokenizerService;
-
-    @Autowired
-    private UserService userService;
-
-    private List<String> urlPatterns = Arrays.asList("/postad", "/editad");
+public class AuthFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
-    public void doFilter(final ServletRequest req, final ServletResponse resp, final FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        String auth = request.getHeader("Authorization");
-        for (String urlPattern : urlPatterns) {
-            if (request.getRequestURI().contains(urlPattern) && auth != null) {
-                String email = tokenizerService.codeEncodeToken(auth);
-                User user = userService.findByEmail(email);
-                if (user.isEmpty()) {
-//                    throw new AuthenticationException(
-//                        String.format("User: %s is unknown.", user.getEmail()));
-                    System.out.println(String.format("User: %s is unknown.", user.getEmail()));
-                }
-                req.setAttribute("user", user);
-                break;
-            }
+    public Authentication attemptAuthentication(final HttpServletRequest request,
+                                                final HttpServletResponse response)
+        throws AuthenticationException {
+        UsernamePasswordAuthenticationToken authRequest;
+        try (BufferedReader reader = request.getReader()) {
+            CredentialJson json = new Gson().fromJson(reader, CredentialJson.class);
+            authRequest =
+                new UsernamePasswordAuthenticationToken(json.getEmail(), json.getPassword());
+        } catch (IOException e) {
+            e.printStackTrace();
+            authRequest = new UsernamePasswordAuthenticationToken("", "");
         }
-        chain.doFilter(req, resp);
-    }
-
-    @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-        //empty method
-    }
-
-    @Override
-    public void destroy() {
-        //empty method
+        setDetails(request, authRequest);
+        return getAuthenticationManager().authenticate(authRequest);
     }
 }

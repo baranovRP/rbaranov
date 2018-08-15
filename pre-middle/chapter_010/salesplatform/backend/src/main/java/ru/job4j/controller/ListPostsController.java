@@ -19,7 +19,6 @@ public class ListPostsController {
 
     @GetMapping(value = "/list", produces = "application/json;charset=UTF-8")
     public List<Post> getPostsCollection() {
-        // TODOset password to empty
         return service.findAll();
     }
 }

@@ -14,7 +14,7 @@
             </router-link>
           </li>
           <li v-if="auth" class="header-nav-postad ">
-            <span class="btn-header-txt">{{userEmail.email}}</span>
+            <span class="btn-header-txt">{{userEmail}}</span>
           </li>
           <li v-if="!auth" class="header-nav-login">
             <router-link to="/login" class="header-nav-link">Login</router-link>

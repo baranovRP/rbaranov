@@ -19,7 +19,7 @@ public class RoleRepositoryTest extends BaseTest {
         Role role = repo.findById(1L)
             .orElseThrow(() ->
                 new IllegalStateException("Role with id 1L not found"));
-        assertThat(role.getType(), is("USER"));
+        assertThat(role.getType(), is("ROLE_USER"));
     }
 
     @Test
