@@ -7,7 +7,7 @@
             <div class="post-thumbnail">
               <img :src="post.pictures[0]
               ? 'pic?post=' + post.id + '&pic=' + post.pictures[0]
-              : '/assets/noimage_thumbnail.png'"
+              : '/public/assets/noimage_thumbnail.png'"
                    :alt="post.car.carModel.manufacture.name">
               <span class="ribbon-featured" v-show="!post.isActive">
                 <strong class="ribbon">Sold Out</strong>
@@ -42,10 +42,8 @@
             </span>
           </div>
 
-          <b-form-checkbox v-if="auth" class="toggle" type="checkbox"
-                           v-model="post.isActive"
-                           @click="carSold(post)">Sold Out
-          </b-form-checkbox>
+          <input v-if="auth" class="toggle" type="checkbox"
+                 v-model="post.isActive" @click="carSold(post)">
         </div>
       </article>
     </slot>

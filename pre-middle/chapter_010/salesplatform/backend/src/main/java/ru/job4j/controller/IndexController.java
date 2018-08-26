@@ -13,6 +13,6 @@ public class IndexController {
 
     @RequestMapping({"", "/"})
     public String getIndexPage(Model model) {
-        return "/index.html";
+        return "public/index.html";
     }
 }

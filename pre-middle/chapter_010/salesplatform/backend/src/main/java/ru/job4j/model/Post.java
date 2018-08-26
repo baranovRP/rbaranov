@@ -1,6 +1,10 @@
 package ru.job4j.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gson.annotations.JsonAdapter;
+import ru.job4j.dto.PostDto;
 import ru.job4j.json.PictureListSerializer;
 import ru.job4j.model.car.Car;
 
@@ -10,12 +14,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Represent Post class.
  */
 @Entity
 @Table(name = "posts")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Post {
 
     @Id
@@ -36,6 +42,7 @@ public class Post {
     private User user;
 
     @Column(name = "publish_date")
+    @JsonFormat(pattern = "yyyy.MM.dd 'at' HH:mm:ss")
     private Timestamp publishDate;
 
     @JsonAdapter(PictureListSerializer.class)
@@ -70,6 +77,16 @@ public class Post {
         this.user = user;
         this.publishDate = publishDate;
         this.pictures = pictures;
+    }
+
+    public PostDto convertPost() {
+        return new PostDto()
+            .setId(this.getId()).setContent(this.getContent())
+            .setPrice(this.getPrice()).setIsActive(this.getIsActive())
+            .setCar(this.getCar()).setUser(this.getUser())
+            .setPublishDate(this.getPublishDate())
+            .setPictures(this.getPictures().stream()
+                .map(Picture::getId).collect(Collectors.toList()));
     }
 
     public Long getId() {

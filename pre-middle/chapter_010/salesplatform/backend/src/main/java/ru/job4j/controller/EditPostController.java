@@ -1,6 +1,7 @@
 package ru.job4j.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +36,9 @@ public class EditPostController {
         if (null == user) {
             throw new IllegalStateException("User is null");
         }
-        Post post = new Gson().fromJson(postad, Post.class);
+        Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy.MM.dd 'at' HH:mm:ss").create();
+        Post post = gson.fromJson(postad, Post.class);
         service.editPostAd(user, post);
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * Repository context.
@@ -46,12 +47,20 @@ public class SpringRepositoryConfig {
     }
 
     @Bean
+    public Properties jpaProperties() {
+        Properties jpaProperties = new Properties();
+        jpaProperties.put("hibernate.jdbc.lob.non_contextual_creation", true);
+        return jpaProperties;
+    }
+
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factoryBean
             = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource());
         factoryBean.setPackagesToScan("ru.job4j");
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter());
+        factoryBean.setJpaProperties(jpaProperties());
         return factoryBean;
     }
 
