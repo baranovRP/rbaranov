@@ -1,11 +1,11 @@
 package ru.job4j.config;
 
 import org.hibernate.dialect.PostgreSQL94Dialect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -26,15 +26,8 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "ru.job4j.repository")
 public class SpringRepositoryConfig {
 
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/sales_car_platform");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("");
-        return dataSource;
-    }
+    @Autowired
+    DataSource dataSource;
 
     @Bean
     public HibernateJpaVendorAdapter jpaVendorAdapter() {
@@ -57,7 +50,7 @@ public class SpringRepositoryConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factoryBean
             = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource());
+        factoryBean.setDataSource(dataSource);
         factoryBean.setPackagesToScan("ru.job4j");
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter());
         factoryBean.setJpaProperties(jpaProperties());
