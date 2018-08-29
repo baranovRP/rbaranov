@@ -42,10 +42,10 @@
             </span>
           </div>
 
-          <b-form-checkbox v-if="auth" class="toggle" type="checkbox"
-                           v-model="post.isActive"
-                           @click="carSold(post)">In Sale
-          </b-form-checkbox>
+          <label :for="'input'+post.id">In Sale</label>
+          <input v-if="auth" class="toggle" type="checkbox"
+                 v-model="post.isActive" @click="carSold(post)"
+                 :id="'input'+post.id">
         </div>
       </article>
     </slot>
