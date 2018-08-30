@@ -1,6 +1,5 @@
 package ru.job4j.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,14 +22,18 @@ import ru.job4j.filter.AuthFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private String[] urlPatterns = new String[]{
+    private static final String[] URL_PATTERNS = new String[]{
         "/", "/index", "/assets/**", "/static/**",
         "/list", "/pic", "/metadata", "/filter", "/login", "/register"};
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private SalesPlatformAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final UserDetailsService userDetailsService;
+    private final SalesPlatformAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    public WebSecurityConfig(final UserDetailsService userDetailsService,
+                             final SalesPlatformAuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.userDetailsService = userDetailsService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers(urlPatterns).permitAll()
+            .antMatchers(URL_PATTERNS).permitAll()
             .antMatchers(HttpMethod.GET).permitAll()
             .antMatchers("/postad", "/editad").hasRole("USER")
             .anyRequest().authenticated();

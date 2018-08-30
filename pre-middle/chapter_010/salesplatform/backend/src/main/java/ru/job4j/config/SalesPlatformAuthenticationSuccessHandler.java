@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 public class SalesPlatformAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private RequestCache cache = new HttpSessionRequestCache();
+    private final RequestCache cache = new HttpSessionRequestCache();
 
     @Override
     public void onAuthenticationSuccess(final HttpServletRequest request,
@@ -39,9 +39,5 @@ public class SalesPlatformAuthenticationSuccessHandler extends SimpleUrlAuthenti
             return;
         }
         clearAuthenticationAttributes(request);
-    }
-
-    public void setCache(RequestCache requestCache) {
-        this.cache = requestCache;
     }
 }
