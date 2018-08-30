@@ -16,8 +16,8 @@ import java.util.Set;
  */
 public class SalesPlatformUserPrincipal implements UserDetails {
 
-    private User user;
-    private Role role;
+    private final User user;
+    private final Role role;
 
     public SalesPlatformUserPrincipal(final User user, final Role role) {
         this.user = user;
