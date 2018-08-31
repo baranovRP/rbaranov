@@ -1,6 +1,7 @@
 package ru.job4j.repository.car;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.job4j.BaseTest;
@@ -14,6 +15,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
+@Ignore
 public class CarDaoImplTest extends BaseTest {
 
     @Autowired

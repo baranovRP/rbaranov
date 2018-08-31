@@ -1,6 +1,7 @@
 package ru.job4j.repository;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.job4j.BaseTest;
@@ -15,6 +16,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@Ignore
 public class UserRepositoryTest extends BaseTest {
 
     @Autowired

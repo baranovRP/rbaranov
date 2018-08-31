@@ -1,5 +1,6 @@
 package ru.job4j.repository.car.parts;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.job4j.BaseTest;
@@ -9,6 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
+@Ignore
 public class FuelRepositoryTest extends BaseTest {
 
     @Autowired

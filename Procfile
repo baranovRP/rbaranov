@@ -1,0 +1,1 @@
+web: java -jar ./pre-middle/chapter_010/salesplatform/backend/target/backend-1.0.jar

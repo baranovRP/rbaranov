@@ -85,4 +85,32 @@
             <version>3.6.2</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.heroku.sdk</groupId>
+                        <artifactId>heroku-maven-plugin</artifactId>
+                        <version>2.0.6</version>
+                        <configuration>
+                            <appName>salesplatform</appName>
+                            <processTypes>
+                                <web>java -jar target/backend-1.0.jar</web>
+                            </processTypes>
+                            <includeTarget>false</includeTarget>
+                            <includes>
+                                <include>backend/target/backend-1.0.jar</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

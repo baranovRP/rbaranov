@@ -7,6 +7,7 @@ import ru.job4j.model.Post;
 import ru.job4j.model.User;
 import ru.job4j.model.car.Car;
 
+@Ignore
 public class PostRepositoryTest extends BaseTest {
 
     private User user;
