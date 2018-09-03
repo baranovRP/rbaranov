@@ -8,6 +8,7 @@ import java.util.StringJoiner;
  * Class represent Body.
  */
 @Entity
+@Table(name = "body")
 public class Body {
 
     @Id

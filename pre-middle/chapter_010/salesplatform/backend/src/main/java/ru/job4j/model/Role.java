@@ -8,6 +8,7 @@ import java.util.StringJoiner;
  * Class represent Role.
  */
 @Entity
+@Table(name = "role")
 public class Role {
 
     @Id

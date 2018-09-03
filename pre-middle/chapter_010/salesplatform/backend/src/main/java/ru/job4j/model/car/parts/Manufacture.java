@@ -1,9 +1,6 @@
 package ru.job4j.model.car.parts;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -11,6 +8,7 @@ import java.util.StringJoiner;
  * Class represent Manufacture.
  */
 @Entity
+@Table(name = "manufacture")
 public class Manufacture {
 
     @Id

@@ -8,6 +8,7 @@ import java.util.StringJoiner;
  * Class represent Fuel.
  */
 @Entity
+@Table(name = "fuel")
 public class Fuel {
 
     @Id
