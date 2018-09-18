@@ -8,6 +8,7 @@ import java.util.StringJoiner;
  * Class represent Transmission.
  */
 @Entity
+@Table(name = "transmission")
 public class Transmission {
 
     @Id

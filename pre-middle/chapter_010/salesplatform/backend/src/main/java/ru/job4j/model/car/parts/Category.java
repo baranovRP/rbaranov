@@ -8,6 +8,7 @@ import java.util.StringJoiner;
  * Class represent Category.
  */
 @Entity
+@Table(name = "category")
 public class Category {
 
     @Id
